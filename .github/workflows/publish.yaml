@@ -120,7 +120,7 @@ jobs:
           TAG: ${{ inputs.tag }}
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "Github Actions (pluralplay)"
+          git config user.name "Github Actions (NeroBaxmond)"
           git add PKGBUILD .SRCINFO
           if ! git diff --cached --quiet; then
             git commit -m "Update to $TAG"

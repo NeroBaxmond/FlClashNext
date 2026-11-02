@@ -619,8 +619,8 @@ class BuildCommand extends Command {
           .replaceAll("{{APP_ID}}", "728B3532-C74B-4870-9068-BE70FE12A3E6")
           .replaceAll("{{APP_VERSION}}", version)
           .replaceAll("{{DISPLAY_NAME}}", Build.appName)
-          .replaceAll("{{PUBLISHER_NAME}}", "pluralplay")
-          .replaceAll("{{PUBLISHER_URL}}", "https://github.com/pluralplay/FlClashX")
+          .replaceAll("{{PUBLISHER_NAME}}", "NeroBaxmond")
+          .replaceAll("{{PUBLISHER_URL}}", "https://github.com/NeroBaxmond/FlClashNext")
           .replaceAll("{{INSTALL_DIR_NAME}}", "{autopf}\\${Build.appName}")
           .replaceAll("{{OUTPUT_BASE_FILENAME}}", "${Build.appName}-windows-$archName-setup")
           .replaceAll("{{SETUP_ICON_FILE}}", join(current, "windows", "runner", "resources", "app_icon.ico"))
@@ -738,7 +738,7 @@ class BuildCommand extends Command {
       "Priority: optional\n"
       "Architecture: $debArch\n"
       "Depends: libayatana-appindicator3-dev, libkeybinder-3.0-dev\n"
-      "Maintainer: pluralplay <mail@pluralplay.rw>\n"
+      "Maintainer: NeroBaxmond <NeroBaxmond@users.noreply.github.com>\n"
       "Description: $appName\n",
     );
     final debPath = join(Build.distPath, "$appName-linux-$archName.deb");
@@ -779,7 +779,7 @@ class BuildCommand extends Command {
         "Summary: $appName\n"
         "License: Other\n"
         "Group: Applications/Internet\n"
-        "Packager: pluralplay <mail@pluralplay.rw>\n"
+        "Packager: NeroBaxmond <NeroBaxmond@users.noreply.github.com>\n"
         "AutoReqProv: no\n"
         "\n"
         "%description\n"
