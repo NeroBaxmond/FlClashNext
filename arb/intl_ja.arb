@@ -447,5 +447,14 @@
   "zashboardInApp": "アプリ内で zashboard を開く",
   "zashboardInAppDesc": "外部ブラウザに切り替えず、内蔵ブラウザでパネルを表示します",
   "openPanel": "パネルを開く",
-  "downloadingZashboard": "Zashboard をダウンロード中…"
+  "downloadingZashboard": "Zashboard をダウンロード中…",
+  "autoSelect": "自動選択",
+  "autoSelectDesc": "リストの先頭にある仮想グループで、選択したサーバーの中から最も遅延の低いものを自動的に選択します。",
+  "autoSelectName": "グループ名",
+  "autoSelectInterval": "チェック間隔（秒）",
+  "autoSelectServers": "サーバー",
+  "autoSelectServersEmpty": "少なくとも1つのサーバーを選択してください",
+  "autoSelectSelectAll": "すべて選択",
+  "autoSelectDeselectAll": "解除",
+  "autoSelectProfileOnly": "自動選択は現在のサブスクリプションのサーバー内で機能します。"
 }

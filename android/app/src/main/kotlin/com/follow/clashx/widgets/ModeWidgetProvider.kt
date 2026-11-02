@@ -45,7 +45,7 @@ class ModeWidgetProvider : AppWidgetProvider() {
         }
 
         private fun refreshAll() {
-            val ctx = com.follow.clashx.FlClashXApplication.getAppContext()
+            val ctx = com.follow.clashx.FlClashNextApplication.getAppContext()
             val mgr = AppWidgetManager.getInstance(ctx) ?: return
             val component = ComponentName(ctx, ModeWidgetProvider::class.java)
             val ids = mgr.getAppWidgetIds(component)
@@ -135,7 +135,7 @@ class ModeWidgetProvider : AppWidgetProvider() {
         when (intent.action) {
             ACTION_TOGGLE -> {
                 if (GlobalState.runStateFlow.value == RunState.PENDING) {
-                    Log.d(TAG, "Ignoring toggle — operation in progress")
+                    Log.d(TAG, "Ignoring toggle вЂ” operation in progress")
                     return
                 }
                 GlobalState.handleToggle()

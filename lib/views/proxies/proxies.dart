@@ -5,6 +5,7 @@ import 'package:flclashx/models/models.dart';
 import 'package:flclashx/providers/providers.dart';
 import 'package:flclashx/state.dart';
 import 'package:flclashx/views/proxies/list.dart';
+import 'package:flclashx/views/proxies/auto_select.dart';
 import 'package:flclashx/views/proxies/providers.dart';
 import 'package:flclashx/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +117,16 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> with PageMixin {
                         body: const ProxiesSetting(),
                         title: appLocalizations.settings,
                       ),
+                  );
+                },
+              ),
+              PopupMenuItemData(
+                icon: Icons.bolt,
+                label: appLocalizations.autoSelect,
+                onPressed: () {
+                  showExtend(
+                    context,
+                    builder: (_, type) => const AutoSelectView(),
                   );
                 },
               ),

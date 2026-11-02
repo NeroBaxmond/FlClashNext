@@ -96,6 +96,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "autoLaunchDesc": MessageLookupByLibrary.simpleMessage("システムの自動起動に従う"),
     "autoRun": MessageLookupByLibrary.simpleMessage("自動実行"),
     "autoRunDesc": MessageLookupByLibrary.simpleMessage("アプリ起動時に自動実行"),
+    "autoSelect": MessageLookupByLibrary.simpleMessage("自動選択"),
+    "autoSelectDesc": MessageLookupByLibrary.simpleMessage(
+      "リストの先頭にある仮想グループで、選択したサーバーの中から最も遅延の低いものを自動的に選択します。",
+    ),
+    "autoSelectDeselectAll": MessageLookupByLibrary.simpleMessage("解除"),
+    "autoSelectInterval": MessageLookupByLibrary.simpleMessage("チェック間隔（秒）"),
+    "autoSelectName": MessageLookupByLibrary.simpleMessage("グループ名"),
+    "autoSelectProfileOnly": MessageLookupByLibrary.simpleMessage(
+      "自動選択は現在のサブスクリプションのサーバー内で機能します。",
+    ),
+    "autoSelectSelectAll": MessageLookupByLibrary.simpleMessage("すべて選択"),
+    "autoSelectServers": MessageLookupByLibrary.simpleMessage("サーバー"),
+    "autoSelectServersEmpty": MessageLookupByLibrary.simpleMessage(
+      "少なくとも1つのサーバーを選択してください",
+    ),
     "autoSetSystemDns": MessageLookupByLibrary.simpleMessage("オートセットシステムDNS"),
     "autoStart": MessageLookupByLibrary.simpleMessage("自動起動"),
     "autoStartDesc": MessageLookupByLibrary.simpleMessage(

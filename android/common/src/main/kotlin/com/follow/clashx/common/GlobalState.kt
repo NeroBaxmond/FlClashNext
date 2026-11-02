@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 object GlobalState {
     private const val TAG = "FlClashX"
 
-    const val NOTIFICATION_CHANNEL = "FlClashX"
+    const val NOTIFICATION_CHANNEL = "FlClash Next"
     const val NOTIFICATION_ID = 1
 
     lateinit var application: Application

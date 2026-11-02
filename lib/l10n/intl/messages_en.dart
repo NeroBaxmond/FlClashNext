@@ -131,6 +131,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "autoRunDesc": MessageLookupByLibrary.simpleMessage(
       "Auto run when the application is opened",
     ),
+    "autoSelect": MessageLookupByLibrary.simpleMessage("Auto select"),
+    "autoSelectDesc": MessageLookupByLibrary.simpleMessage(
+      "A virtual group at the top of the list that automatically picks the server with the lowest latency from your selection.",
+    ),
+    "autoSelectDeselectAll": MessageLookupByLibrary.simpleMessage("Clear"),
+    "autoSelectInterval": MessageLookupByLibrary.simpleMessage(
+      "Check interval (seconds)",
+    ),
+    "autoSelectName": MessageLookupByLibrary.simpleMessage("Group name"),
+    "autoSelectProfileOnly": MessageLookupByLibrary.simpleMessage(
+      "Auto select works within the current subscription\'s servers.",
+    ),
+    "autoSelectSelectAll": MessageLookupByLibrary.simpleMessage("Select all"),
+    "autoSelectServers": MessageLookupByLibrary.simpleMessage("Servers"),
+    "autoSelectServersEmpty": MessageLookupByLibrary.simpleMessage(
+      "Select at least one server",
+    ),
     "autoSetSystemDns": MessageLookupByLibrary.simpleMessage(
       "Auto set system DNS",
     ),

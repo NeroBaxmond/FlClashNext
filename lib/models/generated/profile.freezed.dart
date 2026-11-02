@@ -222,6 +222,238 @@ abstract class _SubscriptionInfo implements SubscriptionInfo {
       throw _privateConstructorUsedError;
 }
 
+AutoSelectProps _$AutoSelectPropsFromJson(Map<String, dynamic> json) {
+  return _AutoSelectProps.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AutoSelectProps {
+  bool get enable => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+
+  /// Interval between automatic url-test checks, in seconds.
+  int get interval => throw _privateConstructorUsedError;
+
+  /// Server names (from the current profile) that participate in the test.
+  List<String> get servers => throw _privateConstructorUsedError;
+
+  /// Serializes this AutoSelectProps to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of AutoSelectProps
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AutoSelectPropsCopyWith<AutoSelectProps> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AutoSelectPropsCopyWith<$Res> {
+  factory $AutoSelectPropsCopyWith(
+          AutoSelectProps value, $Res Function(AutoSelectProps) then) =
+      _$AutoSelectPropsCopyWithImpl<$Res, AutoSelectProps>;
+  @useResult
+  $Res call({bool enable, String name, int interval, List<String> servers});
+}
+
+/// @nodoc
+class _$AutoSelectPropsCopyWithImpl<$Res, $Val extends AutoSelectProps>
+    implements $AutoSelectPropsCopyWith<$Res> {
+  _$AutoSelectPropsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of AutoSelectProps
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? enable = null,
+    Object? name = null,
+    Object? interval = null,
+    Object? servers = null,
+  }) {
+    return _then(_value.copyWith(
+      enable: null == enable
+          ? _value.enable
+          : enable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      interval: null == interval
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as int,
+      servers: null == servers
+          ? _value.servers
+          : servers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AutoSelectPropsImplCopyWith<$Res>
+    implements $AutoSelectPropsCopyWith<$Res> {
+  factory _$$AutoSelectPropsImplCopyWith(_$AutoSelectPropsImpl value,
+          $Res Function(_$AutoSelectPropsImpl) then) =
+      __$$AutoSelectPropsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool enable, String name, int interval, List<String> servers});
+}
+
+/// @nodoc
+class __$$AutoSelectPropsImplCopyWithImpl<$Res>
+    extends _$AutoSelectPropsCopyWithImpl<$Res, _$AutoSelectPropsImpl>
+    implements _$$AutoSelectPropsImplCopyWith<$Res> {
+  __$$AutoSelectPropsImplCopyWithImpl(
+      _$AutoSelectPropsImpl _value, $Res Function(_$AutoSelectPropsImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AutoSelectProps
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? enable = null,
+    Object? name = null,
+    Object? interval = null,
+    Object? servers = null,
+  }) {
+    return _then(_$AutoSelectPropsImpl(
+      enable: null == enable
+          ? _value.enable
+          : enable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      interval: null == interval
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as int,
+      servers: null == servers
+          ? _value._servers
+          : servers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AutoSelectPropsImpl implements _AutoSelectProps {
+  const _$AutoSelectPropsImpl(
+      {this.enable = false,
+      this.name = "⚡ Auto",
+      this.interval = 300,
+      final List<String> servers = const []})
+      : _servers = servers;
+
+  factory _$AutoSelectPropsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AutoSelectPropsImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final bool enable;
+  @override
+  @JsonKey()
+  final String name;
+
+  /// Interval between automatic url-test checks, in seconds.
+  @override
+  @JsonKey()
+  final int interval;
+
+  /// Server names (from the current profile) that participate in the test.
+  final List<String> _servers;
+
+  /// Server names (from the current profile) that participate in the test.
+  @override
+  @JsonKey()
+  List<String> get servers {
+    if (_servers is EqualUnmodifiableListView) return _servers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_servers);
+  }
+
+  @override
+  String toString() {
+    return 'AutoSelectProps(enable: $enable, name: $name, interval: $interval, servers: $servers)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AutoSelectPropsImpl &&
+            (identical(other.enable, enable) || other.enable == enable) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.interval, interval) ||
+                other.interval == interval) &&
+            const DeepCollectionEquality().equals(other._servers, _servers));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, enable, name, interval,
+      const DeepCollectionEquality().hash(_servers));
+
+  /// Create a copy of AutoSelectProps
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AutoSelectPropsImplCopyWith<_$AutoSelectPropsImpl> get copyWith =>
+      __$$AutoSelectPropsImplCopyWithImpl<_$AutoSelectPropsImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AutoSelectPropsImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AutoSelectProps implements AutoSelectProps {
+  const factory _AutoSelectProps(
+      {final bool enable,
+      final String name,
+      final int interval,
+      final List<String> servers}) = _$AutoSelectPropsImpl;
+
+  factory _AutoSelectProps.fromJson(Map<String, dynamic> json) =
+      _$AutoSelectPropsImpl.fromJson;
+
+  @override
+  bool get enable;
+  @override
+  String get name;
+
+  /// Interval between automatic url-test checks, in seconds.
+  @override
+  int get interval;
+
+  /// Server names (from the current profile) that participate in the test.
+  @override
+  List<String> get servers;
+
+  /// Create a copy of AutoSelectProps
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AutoSelectPropsImplCopyWith<_$AutoSelectPropsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Profile _$ProfileFromJson(Map<String, dynamic> json) {
   return _Profile.fromJson(json);
 }
@@ -239,6 +471,7 @@ mixin _$Profile {
   Map<String, String> get selectedMap => throw _privateConstructorUsedError;
   Set<String> get unfoldSet => throw _privateConstructorUsedError;
   OverrideData get overrideData => throw _privateConstructorUsedError;
+  AutoSelectProps get autoSelect => throw _privateConstructorUsedError;
   @JsonKey(includeToJson: false, includeFromJson: false)
   bool get isUpdating => throw _privateConstructorUsedError;
   Map<String, String> get providerHeaders => throw _privateConstructorUsedError;
@@ -269,11 +502,13 @@ abstract class $ProfileCopyWith<$Res> {
       Map<String, String> selectedMap,
       Set<String> unfoldSet,
       OverrideData overrideData,
+      AutoSelectProps autoSelect,
       @JsonKey(includeToJson: false, includeFromJson: false) bool isUpdating,
       Map<String, String> providerHeaders});
 
   $SubscriptionInfoCopyWith<$Res>? get subscriptionInfo;
   $OverrideDataCopyWith<$Res> get overrideData;
+  $AutoSelectPropsCopyWith<$Res> get autoSelect;
 }
 
 /// @nodoc
@@ -302,6 +537,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? selectedMap = null,
     Object? unfoldSet = null,
     Object? overrideData = null,
+    Object? autoSelect = null,
     Object? isUpdating = null,
     Object? providerHeaders = null,
   }) {
@@ -350,6 +586,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.overrideData
           : overrideData // ignore: cast_nullable_to_non_nullable
               as OverrideData,
+      autoSelect: null == autoSelect
+          ? _value.autoSelect
+          : autoSelect // ignore: cast_nullable_to_non_nullable
+              as AutoSelectProps,
       isUpdating: null == isUpdating
           ? _value.isUpdating
           : isUpdating // ignore: cast_nullable_to_non_nullable
@@ -384,6 +624,16 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       return _then(_value.copyWith(overrideData: value) as $Val);
     });
   }
+
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AutoSelectPropsCopyWith<$Res> get autoSelect {
+    return $AutoSelectPropsCopyWith<$Res>(_value.autoSelect, (value) {
+      return _then(_value.copyWith(autoSelect: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -405,6 +655,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       Map<String, String> selectedMap,
       Set<String> unfoldSet,
       OverrideData overrideData,
+      AutoSelectProps autoSelect,
       @JsonKey(includeToJson: false, includeFromJson: false) bool isUpdating,
       Map<String, String> providerHeaders});
 
@@ -412,6 +663,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   $SubscriptionInfoCopyWith<$Res>? get subscriptionInfo;
   @override
   $OverrideDataCopyWith<$Res> get overrideData;
+  @override
+  $AutoSelectPropsCopyWith<$Res> get autoSelect;
 }
 
 /// @nodoc
@@ -438,6 +691,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? selectedMap = null,
     Object? unfoldSet = null,
     Object? overrideData = null,
+    Object? autoSelect = null,
     Object? isUpdating = null,
     Object? providerHeaders = null,
   }) {
@@ -486,6 +740,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.overrideData
           : overrideData // ignore: cast_nullable_to_non_nullable
               as OverrideData,
+      autoSelect: null == autoSelect
+          ? _value.autoSelect
+          : autoSelect // ignore: cast_nullable_to_non_nullable
+              as AutoSelectProps,
       isUpdating: null == isUpdating
           ? _value.isUpdating
           : isUpdating // ignore: cast_nullable_to_non_nullable
@@ -513,6 +771,7 @@ class _$ProfileImpl implements _Profile {
       final Map<String, String> selectedMap = const {},
       final Set<String> unfoldSet = const {},
       this.overrideData = const OverrideData(),
+      this.autoSelect = const AutoSelectProps(),
       @JsonKey(includeToJson: false, includeFromJson: false)
       this.isUpdating = false,
       final Map<String, String> providerHeaders = const {}})
@@ -563,6 +822,9 @@ class _$ProfileImpl implements _Profile {
   @JsonKey()
   final OverrideData overrideData;
   @override
+  @JsonKey()
+  final AutoSelectProps autoSelect;
+  @override
   @JsonKey(includeToJson: false, includeFromJson: false)
   final bool isUpdating;
   final Map<String, String> _providerHeaders;
@@ -576,7 +838,7 @@ class _$ProfileImpl implements _Profile {
 
   @override
   String toString() {
-    return 'Profile(id: $id, label: $label, currentGroupName: $currentGroupName, url: $url, lastUpdateDate: $lastUpdateDate, autoUpdateDuration: $autoUpdateDuration, subscriptionInfo: $subscriptionInfo, autoUpdate: $autoUpdate, selectedMap: $selectedMap, unfoldSet: $unfoldSet, overrideData: $overrideData, isUpdating: $isUpdating, providerHeaders: $providerHeaders)';
+    return 'Profile(id: $id, label: $label, currentGroupName: $currentGroupName, url: $url, lastUpdateDate: $lastUpdateDate, autoUpdateDuration: $autoUpdateDuration, subscriptionInfo: $subscriptionInfo, autoUpdate: $autoUpdate, selectedMap: $selectedMap, unfoldSet: $unfoldSet, overrideData: $overrideData, autoSelect: $autoSelect, isUpdating: $isUpdating, providerHeaders: $providerHeaders)';
   }
 
   @override
@@ -603,6 +865,8 @@ class _$ProfileImpl implements _Profile {
                 .equals(other._unfoldSet, _unfoldSet) &&
             (identical(other.overrideData, overrideData) ||
                 other.overrideData == overrideData) &&
+            (identical(other.autoSelect, autoSelect) ||
+                other.autoSelect == autoSelect) &&
             (identical(other.isUpdating, isUpdating) ||
                 other.isUpdating == isUpdating) &&
             const DeepCollectionEquality()
@@ -624,6 +888,7 @@ class _$ProfileImpl implements _Profile {
       const DeepCollectionEquality().hash(_selectedMap),
       const DeepCollectionEquality().hash(_unfoldSet),
       overrideData,
+      autoSelect,
       isUpdating,
       const DeepCollectionEquality().hash(_providerHeaders));
 
@@ -656,6 +921,7 @@ abstract class _Profile implements Profile {
       final Map<String, String> selectedMap,
       final Set<String> unfoldSet,
       final OverrideData overrideData,
+      final AutoSelectProps autoSelect,
       @JsonKey(includeToJson: false, includeFromJson: false)
       final bool isUpdating,
       final Map<String, String> providerHeaders}) = _$ProfileImpl;
@@ -684,6 +950,8 @@ abstract class _Profile implements Profile {
   Set<String> get unfoldSet;
   @override
   OverrideData get overrideData;
+  @override
+  AutoSelectProps get autoSelect;
   @override
   @JsonKey(includeToJson: false, includeFromJson: false)
   bool get isUpdating;

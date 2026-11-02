@@ -24,6 +24,27 @@ Map<String, dynamic> _$$SubscriptionInfoImplToJson(
       'expire': instance.expire,
     };
 
+_$AutoSelectPropsImpl _$$AutoSelectPropsImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AutoSelectPropsImpl(
+      enable: json['enable'] as bool? ?? false,
+      name: json['name'] as String? ?? "⚡ Auto",
+      interval: (json['interval'] as num?)?.toInt() ?? 300,
+      servers: (json['servers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$$AutoSelectPropsImplToJson(
+        _$AutoSelectPropsImpl instance) =>
+    <String, dynamic>{
+      'enable': instance.enable,
+      'name': instance.name,
+      'interval': instance.interval,
+      'servers': instance.servers,
+    };
+
 _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
     _$ProfileImpl(
       id: json['id'] as String,
@@ -51,6 +72,10 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
       overrideData: json['overrideData'] == null
           ? const OverrideData()
           : OverrideData.fromJson(json['overrideData'] as Map<String, dynamic>),
+      autoSelect: json['autoSelect'] == null
+          ? const AutoSelectProps()
+          : AutoSelectProps.fromJson(
+              json['autoSelect'] as Map<String, dynamic>),
       providerHeaders: (json['providerHeaders'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(k, e as String),
           ) ??
@@ -70,6 +95,7 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
       'selectedMap': instance.selectedMap,
       'unfoldSet': instance.unfoldSet.toList(),
       'overrideData': instance.overrideData,
+      'autoSelect': instance.autoSelect,
       'providerHeaders': instance.providerHeaders,
     };
 

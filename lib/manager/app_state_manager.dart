@@ -5,6 +5,7 @@ import 'package:flclashx/clash/core.dart';
 import 'package:flclashx/clash/lib.dart';
 import 'package:flclashx/common/common.dart';
 import 'package:flclashx/enum/enum.dart';
+import 'package:flclashx/models/models.dart';
 import 'package:flclashx/plugins/tile.dart';
 import 'package:flclashx/providers/providers.dart';
 import 'package:flclashx/state.dart';
@@ -146,6 +147,10 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
         // and stretches the health-check forwarder to a slow interval so it stops
         // pinging every proxy every few seconds for a UI nobody is looking at.
         clashCore.setUiActive(false);
+        // Kill the log stream too: it's a per-line FFI push that keeps waking
+        // the isolate in the background for data nobody renders. The resume
+        // branch re-subscribes it (gated on openLogs) right after reconnect.
+        clashCore.stopLog();
       }
     } else if (state == AppLifecycleState.hidden) {
       // Desktop window hidden (tray/minimize). Falling through to the generic
@@ -183,7 +188,36 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
         // while the process is frozen/killed, and the cached state never
         // self-heals without this.
         unawaited(globalState.appController.syncVpnStateOnResume());
+        // Self-heal the "proxy list vanished after long background" bug
+        // (upstream #117/#40 cluster): if the core was recycled/killed while
+        // backgrounded, groups come back empty and the UI renders a dead
+        // proxies page. Detect the empty-state and force a full re-apply.
+        unawaited(_selfHealAfterResume());
       }
+    }
+  }
+
+  /// Fixes the "long background → proxy list gone + laggy UI" bug: probe the
+  /// core for groups after resume; if the tunnel is running but the core
+  /// returns nothing (recycled/killed core with stale UI state), re-apply the
+  /// profile and resync the VPN state so the UI rebuilds from live data.
+  Future<void> _selfHealAfterResume() async {
+    // Give updateGroupsDebounce (fired just above) a chance to land first.
+    await Future<void>.delayed(const Duration(milliseconds: 800));
+    if (!mounted) return;
+    final hasProfile = globalState.config.currentProfile != null;
+    if (!hasProfile || !globalState.isStart) return;
+    final groups = ref.read(groupsProvider);
+    if (groups.isNotEmpty) return;
+    commonPrint.log(
+      "self-heal: tunnel up but groups empty after resume, re-applying profile",
+    );
+    try {
+      await globalState.appController.applyProfile(silence: true);
+      globalState.appController.updateGroupsDebounce();
+      unawaited(globalState.appController.syncVpnStateOnResume());
+    } catch (e) {
+      commonPrint.log("self-heal: re-apply failed: $e");
     }
   }
 

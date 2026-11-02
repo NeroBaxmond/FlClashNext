@@ -74,7 +74,7 @@ class GlobalState {
   final effectiveTcpConcurrent = ValueNotifier<bool>(false);
   final effectiveUnifiedDelay = ValueNotifier<bool>(false);
   final effectiveLogLevel = ValueNotifier<String>("info");
-  final effectiveKeepAliveInterval = ValueNotifier<int>(30);
+  final effectiveKeepAliveInterval = ValueNotifier<int>(defaultKeepAliveInterval);
   // Custom per-group descriptions parsed from the profile YAML
   // (proxy-groups[*].description). Shown as the subtitle of a nested group
   // card instead of its type (Fallback/URLTest/Selector).
@@ -641,6 +641,66 @@ class GlobalState {
     if (rawConfig["profile"] == null) {
       rawConfig["profile"] = {};
     }
+
+    // Auto-select: inject a virtual `url-test` group at the top of proxy-groups
+    // from the current profile's autoSelect settings. Mihomo picks the member
+    // with the lowest delay and re-checks every `interval` seconds. Servers are
+    // restricted to the current profile's proxies; non-existent names are
+    // dropped so a stale selection can't break the whole config.
+    final autoSelect = profile.autoSelect;
+    if (autoSelect.realEnable) {
+      final availableProxies = <String>[];
+      final rawProxies = rawConfig["proxies"];
+      if (rawProxies is List) {
+        for (final p in rawProxies) {
+          if (p is Map && p["name"] is String) {
+            availableProxies.add(p["name"] as String);
+          }
+        }
+      }
+      final servers = autoSelect.servers
+          .where(availableProxies.contains)
+          .toList();
+      if (servers.isNotEmpty) {
+        final groups = (rawConfig["proxy-groups"] as List? ?? []);
+        // Avoid name collisions with groups/proxies the subscription already
+        // defines: fall back to a fixed suffix until a free name is found.
+        final takenNames = <String>{
+          ...availableProxies,
+          for (final g in groups)
+            if (g is Map && g["name"] is String) g["name"] as String,
+        };
+        var autoName = autoSelect.name.trim().isEmpty
+            ? "⚡ Auto"
+            : autoSelect.name.trim();
+        var fallbackIndex = 0;
+        while (takenNames.contains(autoName)) {
+          fallbackIndex++;
+          autoName = "⚡ Auto ${fallbackIndex.toString().padLeft(2, '0')}";
+        }
+        final autoGroup = {
+          "name": autoName,
+          "type": "url-test",
+          "proxies": servers,
+          "url": config.appSetting.testUrl,
+          "interval": autoSelect.interval < 60 ? 300 : autoSelect.interval,
+          "tolerance": 50,
+        };
+        // Prepend the auto group to every top-level selector so the user can
+        // actually route traffic through it from their main group.
+        for (final g in groups) {
+          if (g is! Map) continue;
+          if (g["type"] != "select") continue;
+          final members = g["proxies"];
+          if (members is List) {
+            g["proxies"] = [autoName, ...members];
+          }
+        }
+        rawConfig["proxy-groups"] = [autoGroup, ...groups];
+      }
+    }
+
+    rawConfig["profile"]["store-selected"] = false;
     if (rawConfig["proxy-providers"] != null) {
       final proxyProviders = rawConfig["proxy-providers"] as Map;
       for (final key in proxyProviders.keys) {

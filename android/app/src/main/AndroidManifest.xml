@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
@@ -33,12 +33,12 @@
     <uses-permission android:name="com.android.permission.GET_INSTALLED_APPS" />
 
     <application
-        android:name=".FlClashXApplication"
+        android:name=".FlClashNextApplication"
         android:banner="@mipmap/ic_banner"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
-        android:label="FlClashX"
+        android:label="FlClash Next"
         android:memtagMode="off"
         android:networkSecurityConfig="@xml/network_security_config">
 
@@ -89,7 +89,7 @@
 
         <!-- Impeller OFF (Skia): Impeller's Vulkan backend janks animations on some
              Pixel GPUs (Tensor) even at a forced 120 Hz, while other devices are
-             fine — the classic device-specific Impeller regression. Skia renders
+             fine вЂ” the classic device-specific Impeller regression. Skia renders
              smoothly here. Revisit if a future Flutter drops the Skia backend. -->
         <meta-data
             android:name="io.flutter.embedding.android.EnableImpeller"
@@ -157,10 +157,10 @@
         </receiver>
 
         <service
-            android:name=".services.FlClashXTileService"
+            android:name=".services.FlClashNextTileService"
             android:exported="true"
             android:icon="@drawable/ic"
-            android:label="FlClashX"
+            android:label="FlClash Next"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             tools:targetApi="n">
             <intent-filter>

@@ -501,5 +501,14 @@
   "zashboardInApp": "Открывать zashboard в приложении",
   "zashboardInAppDesc": "Показывать панель во встроенном браузере, не переключаясь на внешний",
   "openPanel": "Открыть панель",
-  "downloadingZashboard": "Качаю Zashboard…"
+  "downloadingZashboard": "Качаю Zashboard…",
+  "autoSelect": "Автовыбор",
+  "autoSelectDesc": "Виртуальная группа вверху списка, которая автоматически выбирает сервер с наименьшей задержкой из выбранных.",
+  "autoSelectName": "Название группы",
+  "autoSelectInterval": "Интервал проверки (секунды)",
+  "autoSelectServers": "Серверы",
+  "autoSelectServersEmpty": "Выберите хотя бы один сервер",
+  "autoSelectSelectAll": "Выбрать все",
+  "autoSelectDeselectAll": "Снять все",
+  "autoSelectProfileOnly": "Автовыбор работает в пределах серверов текущей подписки."
 }

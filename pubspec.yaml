@@ -1,5 +1,5 @@
-name: flclashx
-description: Fork multi-platform proxy client FlClash based on ClashMeta, simple and easy to use, open-source and ad-free.
+﻿name: flclashx
+description: FlClash Next - multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.
 publish_to: "none"
 version: 0.4.2+2026071801
 
@@ -66,7 +66,7 @@ dependencies:
   re_editor: ^0.10.0
   re_highlight: ^0.0.3
   flutter_displaymode: ^0.7.0
-  # In-app zashboard panel (Android/iOS/macOS; no Windows/Linux implementation —
+  # In-app zashboard panel (Android/iOS/macOS; no Windows/Linux implementation вЂ”
   # those fall back to the external browser).
   webview_flutter: ^4.13.0
 
@@ -137,8 +137,8 @@ flutter_launcher_icons:
   adaptive_icon_monochrome: "assets/images/icon_white.png"
 
 msix_config:
-  display_name: FlClashX
-  publisher_display_name: pluralplay
+  display_name: FlClash Next
+  publisher_display_name: FlClash Next
   publisher: CN=F778E60B-B797-4F7E-AE56-743F6A0F5B32
   identity_name: pluralplay.FlClashX
   msix_version: 0.4.2.0

@@ -90,6 +90,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "autoLaunchDesc": MessageLookupByLibrary.simpleMessage("跟随系统自启动"),
     "autoRun": MessageLookupByLibrary.simpleMessage("自动运行"),
     "autoRunDesc": MessageLookupByLibrary.simpleMessage("应用打开时自动运行"),
+    "autoSelect": MessageLookupByLibrary.simpleMessage("自动选择"),
+    "autoSelectDesc": MessageLookupByLibrary.simpleMessage(
+      "列表顶部的虚拟分组，自动从所选服务器中选择延迟最低的一个。",
+    ),
+    "autoSelectDeselectAll": MessageLookupByLibrary.simpleMessage("清除"),
+    "autoSelectInterval": MessageLookupByLibrary.simpleMessage("检查间隔（秒）"),
+    "autoSelectName": MessageLookupByLibrary.simpleMessage("分组名称"),
+    "autoSelectProfileOnly": MessageLookupByLibrary.simpleMessage(
+      "自动选择仅在当前订阅的服务器内生效。",
+    ),
+    "autoSelectSelectAll": MessageLookupByLibrary.simpleMessage("全选"),
+    "autoSelectServers": MessageLookupByLibrary.simpleMessage("服务器"),
+    "autoSelectServersEmpty": MessageLookupByLibrary.simpleMessage(
+      "请至少选择一个服务器",
+    ),
     "autoSetSystemDns": MessageLookupByLibrary.simpleMessage("自动设置系统DNS"),
     "autoStart": MessageLookupByLibrary.simpleMessage("自启动"),
     "autoStartDesc": MessageLookupByLibrary.simpleMessage(

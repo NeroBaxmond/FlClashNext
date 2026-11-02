@@ -6,9 +6,9 @@ import android.os.Build
 import com.follow.clashx.common.GlobalState as CommonGlobalState
 import com.follow.clashx.common.SavedParams
 
-class FlClashXApplication : Application() {
+class FlClashNextApplication : Application() {
     companion object {
-        private lateinit var instance: FlClashXApplication
+        private lateinit var instance: FlClashNextApplication
         fun getAppContext(): Context = instance.applicationContext
     }
 

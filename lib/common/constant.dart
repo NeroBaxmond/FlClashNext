@@ -1,4 +1,4 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
@@ -8,7 +8,7 @@ import 'package:flclashx/enum/enum.dart';
 import 'package:flclashx/models/models.dart';
 import 'package:flutter/material.dart';
 
-const appName = "FlClashX";
+const appName = "FlClash Next";
 const appHelperService = "FlClashHelperService";
 const coreName = "clashx.meta";
 const browserUa =

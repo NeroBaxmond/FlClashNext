@@ -128,6 +128,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "autoRunDesc": MessageLookupByLibrary.simpleMessage(
       "Автоматически запускать прокси при открытии приложения",
     ),
+    "autoSelect": MessageLookupByLibrary.simpleMessage("Автовыбор"),
+    "autoSelectDesc": MessageLookupByLibrary.simpleMessage(
+      "Виртуальная группа вверху списка, которая автоматически выбирает сервер с наименьшей задержкой из выбранных.",
+    ),
+    "autoSelectDeselectAll": MessageLookupByLibrary.simpleMessage("Снять все"),
+    "autoSelectInterval": MessageLookupByLibrary.simpleMessage(
+      "Интервал проверки (секунды)",
+    ),
+    "autoSelectName": MessageLookupByLibrary.simpleMessage("Название группы"),
+    "autoSelectProfileOnly": MessageLookupByLibrary.simpleMessage(
+      "Автовыбор работает в пределах серверов текущей подписки.",
+    ),
+    "autoSelectSelectAll": MessageLookupByLibrary.simpleMessage("Выбрать все"),
+    "autoSelectServers": MessageLookupByLibrary.simpleMessage("Серверы"),
+    "autoSelectServersEmpty": MessageLookupByLibrary.simpleMessage(
+      "Выберите хотя бы один сервер",
+    ),
     "autoSetSystemDns": MessageLookupByLibrary.simpleMessage(
       "Автоматическая настройка системного DNS",
     ),

@@ -37,6 +37,7 @@ export 'statusbar.dart';
 export 'string.dart';
 export 'system.dart';
 export 'text.dart';
+export 'theme.dart';
 export 'tray.dart';
 export 'utils.dart';
 export 'window.dart';

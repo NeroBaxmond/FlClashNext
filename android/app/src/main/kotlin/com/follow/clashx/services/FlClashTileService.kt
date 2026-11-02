@@ -12,13 +12,13 @@ import com.follow.clashx.GlobalState
 import com.follow.clashx.RunState
 
 @RequiresApi(Build.VERSION_CODES.N)
-class FlClashXTileService : TileService() {
+class FlClashNextTileService : TileService() {
 
     companion object {
         fun requestUpdate(context: Context) {
             requestListeningState(
                 context,
-                ComponentName(context, FlClashXTileService::class.java),
+                ComponentName(context, FlClashNextTileService::class.java),
             )
         }
 
@@ -66,7 +66,7 @@ class FlClashXTileService : TileService() {
                 // Don't force a screen unlock: unlockAndRun() prompts the lock screen.
                 // With VPN permission already granted + saved cold-start params the start
                 // is headless (startForegroundService, no activity), so the VPN toggles
-                // straight from the locked Quick Settings panel — like happ / v2raytun.
+                // straight from the locked Quick Settings panel вЂ” like happ / v2raytun.
                 GlobalState.handleStart()
             }
             Tile.STATE_ACTIVE -> {

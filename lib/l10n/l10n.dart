@@ -3938,6 +3938,91 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Auto select`
+  String get autoSelect {
+    return Intl.message('Auto select', name: 'autoSelect', desc: '', args: []);
+  }
+
+  /// `A virtual group at the top of the list that automatically picks the server with the lowest latency from your selection.`
+  String get autoSelectDesc {
+    return Intl.message(
+      'A virtual group at the top of the list that automatically picks the server with the lowest latency from your selection.',
+      name: 'autoSelectDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group name`
+  String get autoSelectName {
+    return Intl.message(
+      'Group name',
+      name: 'autoSelectName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check interval (seconds)`
+  String get autoSelectInterval {
+    return Intl.message(
+      'Check interval (seconds)',
+      name: 'autoSelectInterval',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Servers`
+  String get autoSelectServers {
+    return Intl.message(
+      'Servers',
+      name: 'autoSelectServers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select at least one server`
+  String get autoSelectServersEmpty {
+    return Intl.message(
+      'Select at least one server',
+      name: 'autoSelectServersEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select all`
+  String get autoSelectSelectAll {
+    return Intl.message(
+      'Select all',
+      name: 'autoSelectSelectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear`
+  String get autoSelectDeselectAll {
+    return Intl.message(
+      'Clear',
+      name: 'autoSelectDeselectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto select works within the current subscription's servers.`
+  String get autoSelectProfileOnly {
+    return Intl.message(
+      'Auto select works within the current subscription\'s servers.',
+      name: 'autoSelectProfileOnly',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

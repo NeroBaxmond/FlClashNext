@@ -383,6 +383,26 @@ class _ProxyGroupCardState extends State<ProxyGroupCard>
                           ],
                         ),
                       ),
+                      // "Auto" tag for computed groups so the user can see at a
+                      // glance which picks are automatic (url-test/fallback).
+                      if (widget.group.type.isComputedSelected)
+                        Container(
+                          margin: const EdgeInsets.only(right: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: colorScheme.secondaryContainer,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            appLocalizations.auto,
+                            style: context.textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSecondaryContainer,
+                            ),
+                          ),
+                        ),
                       Row(
                         children: [
                           // Ping the whole group straight from the header —

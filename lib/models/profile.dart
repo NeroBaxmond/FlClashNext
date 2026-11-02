@@ -47,6 +47,25 @@ class SubscriptionInfo with _$SubscriptionInfo {
 }
 
 @freezed
+class AutoSelectProps with _$AutoSelectProps {
+  const factory AutoSelectProps({
+    @Default(false) bool enable,
+    @Default("⚡ Auto") String name,
+    /// Interval between automatic url-test checks, in seconds.
+    @Default(300) int interval,
+    /// Server names (from the current profile) that participate in the test.
+    @Default([]) List<String> servers,
+  }) = _AutoSelectProps;
+
+  factory AutoSelectProps.fromJson(Map<String, Object?> json) =>
+      _$AutoSelectPropsFromJson(json);
+}
+
+extension AutoSelectPropsExt on AutoSelectProps {
+  bool get realEnable => enable && servers.isNotEmpty;
+}
+
+@freezed
 class Profile with _$Profile {
   const factory Profile({
     required String id,
@@ -60,6 +79,7 @@ class Profile with _$Profile {
     @Default({}) SelectedMap selectedMap,
     @Default({}) Set<String> unfoldSet,
     @Default(OverrideData()) OverrideData overrideData,
+    @Default(AutoSelectProps()) AutoSelectProps autoSelect,
     @JsonKey(includeToJson: false, includeFromJson: false)
     @Default(false)
     bool isUpdating,

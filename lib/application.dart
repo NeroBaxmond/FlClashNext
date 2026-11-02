@@ -191,7 +191,7 @@ class ApplicationState extends ConsumerState<Application> {
                   ),
                   // Reduce animation duration for snappier feel
                   visualDensity: VisualDensity.adaptivePlatformDensity,
-                ),
+                ).applyM3Defaults(),
                 darkTheme: ThemeData(
                   useMaterial3: true,
                   pageTransitionsTheme: _pageTransitionsTheme,
@@ -201,7 +201,7 @@ class ApplicationState extends ConsumerState<Application> {
                   ).toPureBlack(themeProps.pureBlack),
                   // Reduce animation duration for snappier feel
                   visualDensity: VisualDensity.adaptivePlatformDensity,
-                ),
+                ).applyM3Defaults(),
                 home: child,
               );
             },

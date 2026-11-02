@@ -289,6 +289,23 @@ class Config with _$Config {
         for (final p in profiles) {
           if (p is Map) {
             p.remove("updateMethod");
+            // Migration: sanitize legacy/broken autoSelect maps so one bad
+            // profile can't crash Config.fromJson for the whole app.
+            final autoSelect = p["autoSelect"];
+            if (autoSelect is Map) {
+              final servers = autoSelect["servers"];
+              if (servers is! List) {
+                autoSelect["servers"] = <String>[];
+              } else {
+                autoSelect["servers"] = servers
+                    .whereType<String>()
+                    .toList();
+              }
+              final interval = autoSelect["interval"];
+              if (interval is! int || interval < 60) {
+                autoSelect["interval"] = 300;
+              }
+            }
           }
         }
       }

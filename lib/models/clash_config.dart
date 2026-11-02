@@ -16,7 +16,9 @@ const defaultDns = Dns();
 const defaultGeoXUrl = GeoXUrl();
 
 const defaultMixedPort = 7890;
-const defaultKeepAliveInterval = 30;
+// Battery: 30s TCP keep-alives keep the radio hot in the background. 90s is
+// still well under NAT idle timeouts (~2-5 min) while cutting wakeups ~3x.
+const defaultKeepAliveInterval = 90;
 
 const defaultBypassPrivateRouteAddress = [
   "1.0.0.0/8",

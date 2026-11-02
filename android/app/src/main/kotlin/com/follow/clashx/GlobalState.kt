@@ -22,8 +22,8 @@ enum class RunState { START, PENDING, STOP }
 object GlobalState {
     private const val TAG = "GlobalState"
 
-    const val NOTIFICATION_CHANNEL = "FlClashX"
-    const val SUBSCRIPTION_NOTIFICATION_CHANNEL = "FlClashX_Subscription"
+    const val NOTIFICATION_CHANNEL = "FlClash Next"
+    const val SUBSCRIPTION_NOTIFICATION_CHANNEL = "FlClashNext_Subscription"
     const val NOTIFICATION_ID = 1
     const val SUBSCRIPTION_NOTIFICATION_ID = 2
 
@@ -42,8 +42,8 @@ object GlobalState {
     @Volatile private var pendingTimeoutJob: Job? = null
 
     // seq of the last applied StateHub snapshot (guarded by runLock): an older
-    // snapshot — e.g. a pull that was fetched before a transition but applied
-    // after its push — is dropped instead of regressing the state.
+    // snapshot вЂ” e.g. a pull that was fetched before a transition but applied
+    // after its push вЂ” is dropped instead of regressing the state.
     private var lastAppliedSeq: Long = 0L
 
 
@@ -55,7 +55,7 @@ object GlobalState {
                     if (state != RunState.PENDING) {
                         pendingTimeoutJob?.cancel()
                         runCatching {
-                            com.follow.clashx.services.FlClashXTileService.requestUpdate(
+                            com.follow.clashx.services.FlClashNextTileService.requestUpdate(
                                 CommonGlobalState.application,
                             )
                         }
@@ -81,7 +81,7 @@ object GlobalState {
         }
         // Run-state arrives as StateHub pushes from :remote (registration delivers
         // a snapshot, then every transition). Replaces the SERVICE_CREATED/
-        // DESTROYED broadcasts together with their late-delivery discriminators —
+        // DESTROYED broadcasts together with their late-delivery discriminators вЂ”
         // ordering is now guaranteed by the hub's seq instead of guessed from
         // timing windows.
         CommonGlobalState.launch {
@@ -106,7 +106,7 @@ object GlobalState {
             runStateFlow.tryEmit(state)
             // Externally-driven teardown (notification Stop, revoke, OS kill)
             // while the Flutter engine is up: tell Dart so its timers/UI stop too
-            // — the contract the old SERVICE_DESTROYED handler provided. Push-path
+            // вЂ” the contract the old SERVICE_DESTROYED handler provided. Push-path
             // only: pull-syncs must not re-trigger Dart's stop flow.
             if (notifyDart && state == RunState.STOP) {
                 getCurrentTilePlugin()?.handleStop()
@@ -137,7 +137,7 @@ object GlobalState {
             }
             // :remote unreachable (bind warming up / wedged): fall back to the
             // persisted intent flag. A failed probe must not flip a live tunnel's
-            // UI to off — the flag-holder recovers via sticky/boot cold-start.
+            // UI to off вЂ” the flag-holder recovers via sticky/boot cold-start.
             Log.w(TAG, "syncState: remote unreachable, deriving from intent flag")
             if (com.follow.clashx.common.SavedParams.isVpnActive()) {
                 if (runTime == 0L) {
@@ -215,7 +215,7 @@ object GlobalState {
         // Headless limitation: the clash mode lives in ClashConfig and only reaches the
         // core through setupConfig/updateConfig (a full Dart-built config patch), NOT
         // through the AIDL state path (Service.setState -> RemoteService.setState ->
-        // Core.setState) — the CoreState payload carries vpn-props/profile-name/bypass
+        // Core.setState) вЂ” the CoreState payload carries vpn-props/profile-name/bypass
         // only, no mode field. So with no Flutter engine there is no clean way to apply
         // the mode headlessly; we stash it as pendingMode and apply it when the app next
         // opens (widgets may visually revert until then). Reusing setState for the mode

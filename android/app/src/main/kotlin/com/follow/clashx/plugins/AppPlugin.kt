@@ -18,7 +18,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.android.tools.smali.dexlib2.dexbacked.DexBackedDexFile
-import com.follow.clashx.FlClashXApplication
+import com.follow.clashx.FlClashNextApplication
 import com.follow.clashx.GlobalState
 import com.follow.clashx.R
 import com.follow.clashx.extensions.getActionIntent
@@ -46,7 +46,7 @@ import java.util.Collections
 import java.util.zip.ZipFile
 
 // How long the installed-packages snapshot stays fresh. TTL, not load-once: a
-// process-lifetime cache never showed apps (un)installed while FlClashX ran.
+// process-lifetime cache never showed apps (un)installed while FlClashNext ran.
 private const val PACKAGES_CACHE_TTL_MS = 30_000L
 
 // Vendor runtime permission (ITGSA standard) gating the installed-app list on
@@ -150,7 +150,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     private fun initShortcuts(toggle: String, start: String, stop: String) {
-        val ctx = FlClashXApplication.getAppContext()
+        val ctx = FlClashNextApplication.getAppContext()
         val icon = IconCompat.createWithResource(ctx, R.mipmap.ic_launcher_round)
         val toggleShortcut = ShortcutInfoCompat.Builder(ctx, "toggle")
             .setShortLabel(toggle)
@@ -178,7 +178,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     private fun tip(message: String?) {
         // Always surface the tip. The previous `flutterEngine == null` guard silently
         // dropped every tip() coming from a Dart-invoked tile/widget flow.
-        Toast.makeText(FlClashXApplication.getAppContext(), message, Toast.LENGTH_LONG).show()
+        Toast.makeText(FlClashNextApplication.getAppContext(), message, Toast.LENGTH_LONG).show()
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -235,7 +235,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
                         }
                         if (iconMap["default"] == null) {
                             iconMap["default"] =
-                                FlClashXApplication.getAppContext().packageManager?.defaultActivityIcon?.getBase64()
+                                FlClashNextApplication.getAppContext().packageManager?.defaultActivityIcon?.getBase64()
                         }
                         result.successOnMain(iconMap["default"])
                         return@launch
@@ -275,7 +275,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
 
     private fun isIgnoringBatteryOptimizations(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true
-        val ctx = FlClashXApplication.getAppContext()
+        val ctx = FlClashNextApplication.getAppContext()
         val pm = ctx.getSystemService(android.content.Context.POWER_SERVICE)
             as? android.os.PowerManager ?: return false
         return pm.isIgnoringBatteryOptimizations(ctx.packageName)
@@ -286,7 +286,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     // bring it back). Re-promptable from the UI so a one-time decline isn't permanent.
     private fun requestIgnoreBatteryOptimizations(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false
-        val ctx = FlClashXApplication.getAppContext()
+        val ctx = FlClashNextApplication.getAppContext()
         if (isIgnoringBatteryOptimizations()) return true
         val activity = activityRef?.get()
         return runCatching {
@@ -315,7 +315,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     // and sticky restarts are blocked at the OEM level on MIUI/EMUI/ColorOS/Funtouch.
     // Tries known per-OEM activities, falling back to the app's detail settings.
     private fun openAutoStartSettings(): Boolean {
-        val ctx = FlClashXApplication.getAppContext()
+        val ctx = FlClashNextApplication.getAppContext()
         val activity = activityRef?.get()
         val candidates = listOf(
             // Xiaomi MIUI
@@ -353,8 +353,8 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     private fun openFile(path: String) {
         val file = File(path)
         val uri = FileProvider.getUriForFile(
-            FlClashXApplication.getAppContext(),
-            "${FlClashXApplication.getAppContext().packageName}.fileProvider",
+            FlClashNextApplication.getAppContext(),
+            "${FlClashNextApplication.getAppContext().packageName}.fileProvider",
             file
         )
 
@@ -366,13 +366,13 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
             "text/plain"
         ).addFlags(flags)
 
-        val resInfoList = FlClashXApplication.getAppContext().packageManager.queryIntentActivities(
+        val resInfoList = FlClashNextApplication.getAppContext().packageManager.queryIntentActivities(
             intent, PackageManager.MATCH_DEFAULT_ONLY
         )
 
         for (resolveInfo in resInfoList) {
             val packageName = resolveInfo.activityInfo.packageName
-            FlClashXApplication.getAppContext().grantUriPermission(
+            FlClashNextApplication.getAppContext().grantUriPermission(
                 packageName,
                 uri,
                 flags
@@ -387,7 +387,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     private fun updateExcludeFromRecents(value: Boolean?) {
-        val am = getSystemService(FlClashXApplication.getAppContext(), ActivityManager::class.java)
+        val am = getSystemService(FlClashNextApplication.getAppContext(), ActivityManager::class.java)
         val task = am?.appTasks?.firstOrNull {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 it.taskInfo.taskId == activityRef?.get()?.taskId
@@ -404,7 +404,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     private suspend fun getPackageIcon(packageName: String): String? {
-        val packageManager = FlClashXApplication.getAppContext().packageManager
+        val packageManager = FlClashNextApplication.getAppContext().packageManager
         // containsKey, not == null: a failed/icon-less lookup caches null so we don't
         // re-hit PackageManager on every subsequent request for the same package.
         if (!iconMap.containsKey(packageName)) {
@@ -425,7 +425,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     // don't define the permission (plain AOSP/Pixel) proceed immediately.
     // Main thread only (channel handler + permission result), like vpnCallBacks.
     private fun withInstalledAppsPermission(onReady: () -> Unit) {
-        val context = FlClashXApplication.getAppContext()
+        val context = FlClashNextApplication.getAppContext()
         val activity = activityRef?.get()
         val defined = try {
             context.packageManager?.getPermissionInfo(GET_INSTALLED_APPS_PERMISSION, 0) != null
@@ -443,7 +443,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
         installedAppsCallbacks.add(onReady)
         // Only the first requester launches the dialog; the rest ride along and
         // resolve together in onRequestPermissionsResultListener. A permanently
-        // denied permission yields an immediate DENIED result — the load then
+        // denied permission yields an immediate DENIED result вЂ” the load then
         // proceeds with whatever the ROM exposes, so callers never hang.
         if (!alreadyInFlight) {
             ActivityCompat.requestPermissions(
@@ -456,7 +456,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
 
     @Synchronized
     private fun getPackages(): List<Package> {
-        val packageManager = FlClashXApplication.getAppContext().packageManager
+        val packageManager = FlClashNextApplication.getAppContext().packageManager
         val now = android.os.SystemClock.elapsedRealtime()
         if (packages.isNotEmpty() && now - packagesLoadedAt < PACKAGES_CACHE_TTL_MS) {
             return packages.toList()
@@ -464,7 +464,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
         packages.clear()
         packageManager?.getInstalledPackages(PackageManager.GET_META_DATA or PackageManager.GET_PERMISSIONS)
             ?.filter {
-                it.packageName != FlClashXApplication.getAppContext().packageName || it.packageName == "android"
+                it.packageName != FlClashNextApplication.getAppContext().packageName || it.packageName == "android"
 
             }?.map {
                 Package(
@@ -496,7 +496,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     fun requestVpnPermission(callBack: (granted: Boolean) -> Unit) {
-        val intent = VpnService.prepare(FlClashXApplication.getAppContext())
+        val intent = VpnService.prepare(FlClashNextApplication.getAppContext())
         if (intent != null) {
             val activity = activityRef?.get()
             if (activity != null) {
@@ -515,7 +515,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
             // route through the headless consent path (TempActivity "START" runs
             // prepare + start) and tell the in-place caller it could not start now.
             runCatching {
-                val ctx = FlClashXApplication.getAppContext()
+                val ctx = FlClashNextApplication.getAppContext()
                 ctx.startActivity(ctx.getActionIntent("START"))
             }
             callBack(false)
@@ -528,7 +528,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     fun requestNotificationsPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val permission = ContextCompat.checkSelfPermission(
-                FlClashXApplication.getAppContext(),
+                FlClashNextApplication.getAppContext(),
                 Manifest.permission.POST_NOTIFICATIONS
             )
             if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -547,7 +547,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     private fun isChinaPackage(packageName: String): Boolean {
-        val packageManager = FlClashXApplication.getAppContext().packageManager ?: return false
+        val packageManager = FlClashNextApplication.getAppContext().packageManager ?: return false
         skipPrefixList.forEach {
             if (packageName == it || packageName.startsWith("$it.")) return false
         }
@@ -631,7 +631,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
         activityRef = WeakReference(binding.activity)
         // Re-register result listeners: a non-handled config change recreates the
         // ActivityPluginBinding and drops the old listeners, so an in-flight VPN
-        // consent result would otherwise never arrive — permanently stranding the
+        // consent result would otherwise never arrive вЂ” permanently stranding the
         // queued vpnCallBacks (the consent dialog would never relaunch).
         binding.addActivityResultListener(::onActivityResult)
         binding.addRequestPermissionsResultListener(::onRequestPermissionsResultListener)
