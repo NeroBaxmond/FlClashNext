@@ -16,9 +16,10 @@ const defaultDns = Dns();
 const defaultGeoXUrl = GeoXUrl();
 
 const defaultMixedPort = 7890;
-// Battery: 30s TCP keep-alives keep the radio hot in the background. 90s is
-// still well under NAT idle timeouts (~2-5 min) while cutting wakeups ~3x.
-const defaultKeepAliveInterval = 90;
+// Keep the upstream default. The optional energy-saving mode changes this
+// value only when the user explicitly enables it.
+const defaultKeepAliveInterval = 30;
+const energySavingKeepAliveInterval = 90;
 
 const defaultBypassPrivateRouteAddress = [
   "1.0.0.0/8",
@@ -162,7 +163,8 @@ class Sniffer with _$Sniffer {
       _$SnifferFromJson(json);
 }
 
-List<String> _formJsonPorts(List? ports) => ports?.map((item) => item.toString()).toList() ?? [];
+List<String> _formJsonPorts(List? ports) =>
+    ports?.map((item) => item.toString()).toList() ?? [];
 
 @freezed
 class SnifferConfig with _$SnifferConfig {
@@ -391,17 +393,17 @@ class ParsedRule with _$ParsedRule {
 
 extension ParsedRuleExt on ParsedRule {
   String get value => [
-      ruleAction.value,
-      if (ruleAction == RuleAction.RULE_SET)
-        ruleProvider
-      else if (ruleAction != RuleAction.MATCH)
-        content,
-      ruleAction == RuleAction.SUB_RULE ? subRule : ruleTarget,
-      if (ruleAction.hasParams) ...[
-        if (src) "src",
-        if (noResolve) "no-resolve",
-      ]
-    ].join(",");
+        ruleAction.value,
+        if (ruleAction == RuleAction.RULE_SET)
+          ruleProvider
+        else if (ruleAction != RuleAction.MATCH)
+          content,
+        ruleAction == RuleAction.SUB_RULE ? subRule : ruleTarget,
+        if (ruleAction.hasParams) ...[
+          if (src) "src",
+          if (noResolve) "no-resolve",
+        ]
+      ].join(",");
 }
 
 @freezed
@@ -412,9 +414,9 @@ class Rule with _$Rule {
   }) = _Rule;
 
   factory Rule.value(String value) => Rule(
-      value: value,
-      id: utils.uuidV4,
-    );
+        value: value,
+        id: utils.uuidV4,
+      );
 
   factory Rule.fromJson(Map<String, Object?> json) => _$RuleFromJson(json);
 }
@@ -440,15 +442,16 @@ List<Rule> _genRule(List<dynamic>? rules) {
       .toList();
 }
 
-List<RuleProvider> _genRuleProviders(Map<String, dynamic> json) => json.entries.map((entry) => RuleProvider(name: entry.key)).toList();
+List<RuleProvider> _genRuleProviders(Map<String, dynamic> json) =>
+    json.entries.map((entry) => RuleProvider(name: entry.key)).toList();
 
 List<SubRule> _genSubRules(Map<String, dynamic> json) => json.entries
-      .map(
-        (entry) => SubRule(
-          name: entry.key,
-        ),
-      )
-      .toList();
+    .map(
+      (entry) => SubRule(
+        name: entry.key,
+      ),
+    )
+    .toList();
 
 @freezed
 class ClashConfigSnippet with _$ClashConfigSnippet {

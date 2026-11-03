@@ -9,12 +9,10 @@ import 'package:flclashx/models/models.dart';
 import 'package:flclashx/plugins/tile.dart';
 import 'package:flclashx/providers/providers.dart';
 import 'package:flclashx/state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AppStateManager extends ConsumerStatefulWidget {
-
   const AppStateManager({
     super.key,
     required this.child,
@@ -27,6 +25,7 @@ class AppStateManager extends ConsumerStatefulWidget {
 
 class _AppStateManagerState extends ConsumerState<AppStateManager>
     with WidgetsBindingObserver {
+  bool get _energySaving => globalState.config.appSetting.energySaving;
   // Serializes macOS system-DNS set/restore so concurrent listener fires (rapid
   // toggle / TUN flap) can't interleave networksetup calls and snapshot a transient
   // injected value as the "origin".
@@ -68,6 +67,16 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
       }
     });
     ref.listenManual(
+      appSettingProvider.select((state) => state.energySaving),
+      (prev, next) {
+        if (prev != next) {
+          // Re-apply the runtime config immediately: keep-alive is a core
+          // setting, not merely a preference used on the next launch.
+          unawaited(globalState.appController.applyProfile(silence: true));
+        }
+      },
+    );
+    ref.listenManual(
       autoSetSystemDnsStateProvider,
       (prev, next) {
         if (prev == next) {
@@ -76,9 +85,8 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
         final restore = !(next.a == true && next.b == true);
         // Chain through _dnsOp so set/restore never overlap; catchError keeps the
         // chain alive if one networksetup invocation throws.
-        _dnsOp = _dnsOp
-            .then((_) => system.setMacOSDns(restore))
-            .catchError((_) {});
+        _dnsOp =
+            _dnsOp.then((_) => system.setMacOSDns(restore)).catchError((_) {});
       },
     );
     ref.listenManual(
@@ -143,14 +151,14 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
         globalState.stopUpdateTasks();
         globalState.appController.stopRunTimeTimer();
         globalState.stopGroupsUpdateTask();
-        // Tell the core the UI is backgrounded: it pauses the request forwarder
-        // and stretches the health-check forwarder to a slow interval so it stops
-        // pinging every proxy every few seconds for a UI nobody is looking at.
-        clashCore.setUiActive(false);
-        // Kill the log stream too: it's a per-line FFI push that keeps waking
-        // the isolate in the background for data nobody renders. The resume
-        // branch re-subscribes it (gated on openLogs) right after reconnect.
-        clashCore.stopLog();
+        // These are opt-in optimisations. With the switch off, leave the core
+        // in its normal foreground cadence just like the original app.
+        if (_energySaving) {
+          clashCore.setUiActive(false);
+          // A log stream is a per-line FFI push which can wake the isolate in
+          // the background. Only stop it in the opt-in battery mode.
+          clashCore.stopLog();
+        }
       }
     } else if (state == AppLifecycleState.hidden) {
       // Desktop window hidden (tray/minimize). Falling through to the generic
@@ -169,11 +177,12 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
         // the cold-start path already does.
         clashLib?.reconnectIfNeeded();
         clashCore.setUiActive(true);
-        // Re-subscribe the log stream: the log subscriber lives in :remote and is gone
-        // after a recycle, and nothing else re-issues it on resume. Gated on openLogs.
+        // Restore normal core cadence on every resume. In battery mode also
+        // restore the log subscription according to the user's log setting.
+        clashCore.setUiActive(true);
         if (globalState.config.appSetting.openLogs) {
           clashCore.startLog();
-        } else {
+        } else if (_energySaving) {
           clashCore.stopLog();
         }
         globalState.startGroupsUpdateTask();
@@ -188,11 +197,11 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
         // while the process is frozen/killed, and the cached state never
         // self-heals without this.
         unawaited(globalState.appController.syncVpnStateOnResume());
-        // Self-heal the "proxy list vanished after long background" bug
-        // (upstream #117/#40 cluster): if the core was recycled/killed while
-        // backgrounded, groups come back empty and the UI renders a dead
-        // proxies page. Detect the empty-state and force a full re-apply.
-        unawaited(_selfHealAfterResume());
+        // The recovery pass is only needed after the optional background
+        // throttling can recycle the remote core.
+        if (_energySaving) {
+          unawaited(_selfHealAfterResume());
+        }
       }
     }
   }
@@ -230,15 +239,14 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
 
   @override
   Widget build(BuildContext context) => Listener(
-      onPointerHover: (_) {
-        render?.resume();
-      },
-      child: widget.child,
-    );
+        onPointerHover: (_) {
+          render?.resume();
+        },
+        child: widget.child,
+      );
 }
 
 class AppEnvManager extends StatelessWidget {
-
   const AppEnvManager({
     super.key,
     required this.child,
@@ -247,22 +255,6 @@ class AppEnvManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      if (globalState.isPre) {
-        return Banner(
-          message: 'DEBUG',
-          location: BannerLocation.topEnd,
-          child: child,
-        );
-      }
-    }
-    if (globalState.isPre) {
-      return Banner(
-        message: 'PRE',
-        location: BannerLocation.topEnd,
-        child: child,
-      );
-    }
     return child;
   }
 }

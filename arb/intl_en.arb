@@ -509,5 +509,20 @@
   "autoSelectServersEmpty": "Select at least one server",
   "autoSelectSelectAll": "Select all",
   "autoSelectDeselectAll": "Clear",
-  "autoSelectProfileOnly": "Auto select works within the current subscription's servers."
+  "autoSelectProfileOnly": "Auto select works within the current subscription's servers.",
+  "energySaving": "Energy saving mode",
+  "energySavingDesc": "Reduce background updates and health checks to save battery",
+  "energySavingEnabledDesc": "When disabled, FlClash Next uses the original FlClash background and keep-alive behaviour.",
+  "classicDashboard": "Classic dashboard",
+  "heroCards": "New dashboard cards",
+  "heroStatus": "Connection status",
+  "heroConnect": "Power button",
+  "heroServer": "Selected server",
+  "heroDetails": "Dashboard details",
+  "forkCreator": "Fork creator",
+  "forkCreatorDesc": "udizu (NeroBaxmond)",
+  "forkIntro": "FlClash Next is a personal, polished fork of FlClash focused on a clearer dashboard, reliable VPN operation, and smart server selection.",
+  "originalDevelopers": "Original FlClash developers",
+  "originalDevelopersDesc": "chen08209, pluralplay, kastov, katsukibtw, prettyleaf, mitsuha44 and all other contributors to the original project.",
+  "aiNote": "A small part of the code was written with AI assistance and reviewed, adapted, and tested by the maintainer."
 }

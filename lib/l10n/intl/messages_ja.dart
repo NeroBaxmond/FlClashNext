@@ -70,6 +70,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "adminAutoLaunchDesc": MessageLookupByLibrary.simpleMessage("管理者モードで起動"),
     "ago": MessageLookupByLibrary.simpleMessage("前"),
     "agree": MessageLookupByLibrary.simpleMessage("同意"),
+    "aiNote": MessageLookupByLibrary.simpleMessage(
+      "コードの一部はAIの支援で作成し、メンテナーが確認・調整・テストしています。",
+    ),
     "allApps": MessageLookupByLibrary.simpleMessage("全アプリ"),
     "allowBypass": MessageLookupByLibrary.simpleMessage("アプリがVPNをバイパスすることを許可"),
     "allowBypassDesc": MessageLookupByLibrary.simpleMessage(
@@ -148,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkUpdate": MessageLookupByLibrary.simpleMessage("更新を確認"),
     "checkUpdateError": MessageLookupByLibrary.simpleMessage("アプリは最新版です"),
     "checking": MessageLookupByLibrary.simpleMessage("確認中..."),
+    "classicDashboard": MessageLookupByLibrary.simpleMessage("クラシックダッシュボード"),
     "clearData": MessageLookupByLibrary.simpleMessage("データを消去"),
     "clearDataTip": MessageLookupByLibrary.simpleMessage(
       "これによりすべてのアプリデータが削除され、アプリケーションが再起動されます。よろしいですか？",
@@ -224,6 +228,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyTip": m2,
     "en": MessageLookupByLibrary.simpleMessage("英語"),
     "enableOverride": MessageLookupByLibrary.simpleMessage("上書きを有効化"),
+    "energySaving": MessageLookupByLibrary.simpleMessage("省電力モード"),
+    "energySavingDesc": MessageLookupByLibrary.simpleMessage(
+      "バックグラウンド更新とヘルスチェックを減らして電池を節約します",
+    ),
+    "energySavingEnabledDesc": MessageLookupByLibrary.simpleMessage(
+      "無効にすると、FlClash NextはオリジナルFlClashと同じバックグラウンド動作とkeep-aliveを使用します。",
+    ),
     "entries": MessageLookupByLibrary.simpleMessage(" エントリ"),
     "exclude": MessageLookupByLibrary.simpleMessage("最近のタスクから非表示"),
     "excludeDesc": MessageLookupByLibrary.simpleMessage(
@@ -261,6 +272,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "有効化するとパフォーマンスが若干低下します",
     ),
     "fontFamily": MessageLookupByLibrary.simpleMessage("フォントファミリー"),
+    "forkCreator": MessageLookupByLibrary.simpleMessage("フォーク作成者"),
+    "forkCreatorDesc": MessageLookupByLibrary.simpleMessage(
+      "udizu (NeroBaxmond)",
+    ),
+    "forkIntro": MessageLookupByLibrary.simpleMessage(
+      "FlClash Nextは、見やすいダッシュボード、安定したVPN動作、スマートなサーバー選択を重視したFlClashの個人向けフォークです。",
+    ),
     "fourColumns": MessageLookupByLibrary.simpleMessage("4列"),
     "fruitSaladScheme": MessageLookupByLibrary.simpleMessage("フルーツサラダ"),
     "general": MessageLookupByLibrary.simpleMessage("一般"),
@@ -277,6 +295,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "goDownload": MessageLookupByLibrary.simpleMessage("ダウンロードへ"),
     "gratitude": MessageLookupByLibrary.simpleMessage("感謝"),
     "hasCacheChange": MessageLookupByLibrary.simpleMessage("変更をキャッシュしますか？"),
+    "heroCards": MessageLookupByLibrary.simpleMessage("新しいダッシュボードのカード"),
+    "heroConnect": MessageLookupByLibrary.simpleMessage("電源ボタン"),
+    "heroDetails": MessageLookupByLibrary.simpleMessage("ダッシュボードの詳細"),
+    "heroServer": MessageLookupByLibrary.simpleMessage("選択中のサーバー"),
+    "heroStatus": MessageLookupByLibrary.simpleMessage("接続状態"),
     "hostsDesc": MessageLookupByLibrary.simpleMessage("ホストを追加"),
     "hotkeyConflict": MessageLookupByLibrary.simpleMessage("ホットキー競合"),
     "hotkeyManagement": MessageLookupByLibrary.simpleMessage("ホットキー管理"),
@@ -391,6 +414,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "openLogsFolder": MessageLookupByLibrary.simpleMessage("ログフォルダを開く"),
     "openPanel": MessageLookupByLibrary.simpleMessage("パネルを開く"),
     "options": MessageLookupByLibrary.simpleMessage("オプション"),
+    "originalDevelopers": MessageLookupByLibrary.simpleMessage(
+      "オリジナルFlClashの開発者",
+    ),
+    "originalDevelopersDesc": MessageLookupByLibrary.simpleMessage(
+      "chen08209、pluralplay、kastov、katsukibtw、prettyleaf、mitsuha44、およびオリジナルプロジェクトのすべての貢献者。",
+    ),
     "originalRepository": MessageLookupByLibrary.simpleMessage("オリジナルリポジトリ"),
     "other": MessageLookupByLibrary.simpleMessage("その他"),
     "otherContributors": MessageLookupByLibrary.simpleMessage("貢献者"),

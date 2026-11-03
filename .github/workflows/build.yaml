@@ -405,11 +405,11 @@ jobs:
           if [[ "$VERSION" =~ ^([0-9.]+)-pre\.([0-9]+)$ ]]; then
             echo "pkgver=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
             echo "pkgrel=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
-            echo "aur_pkg=flclashx-git" >> "$GITHUB_OUTPUT"
+            echo "aur_pkg=flclash-next-git" >> "$GITHUB_OUTPUT"
           else
             echo "pkgver=$VERSION" >> "$GITHUB_OUTPUT"
             echo "pkgrel=1" >> "$GITHUB_OUTPUT"
-            echo "aur_pkg=flclashx-bin" >> "$GITHUB_OUTPUT"
+            echo "aur_pkg=flclash-next-bin" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Clone AUR repository
@@ -423,16 +423,16 @@ jobs:
           mkdir -p /tmp/aur-assets
 
           gh release download "$GITHUB_REF_NAME" \
-            -p "FlClashX-linux-amd64.deb" \
+            -p "FlClash Next-linux-amd64.deb" \
             -D /tmp/aur-assets \
             -R "$GITHUB_REPOSITORY"
-          echo "sha_x86=$(sha256sum /tmp/aur-assets/FlClashX-linux-amd64.deb | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+          echo "sha_x86=$(sha256sum "/tmp/aur-assets/FlClash Next-linux-amd64.deb" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
 
           if gh release download "$GITHUB_REF_NAME" \
-            -p "FlClashX-linux-arm64.deb" \
+            -p "FlClash Next-linux-arm64.deb" \
             -D /tmp/aur-assets \
             -R "$GITHUB_REPOSITORY" 2>/dev/null; then
-            echo "sha_arm=$(sha256sum /tmp/aur-assets/FlClashX-linux-arm64.deb | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+            echo "sha_arm=$(sha256sum "/tmp/aur-assets/FlClash Next-linux-arm64.deb" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
             echo "has_arm=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_arm=false" >> "$GITHUB_OUTPUT"

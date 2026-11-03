@@ -119,6 +119,74 @@ class AboutView extends StatelessWidget {
     );
   }
 
+  List<Widget> _buildForkSection(BuildContext context) {
+    const originalDevelopers = [
+      Contributor(
+        name: "chen08209",
+        link: "https://github.com/chen08209",
+      ),
+      Contributor(
+        name: "pluralplay",
+        link: "https://github.com/pluralplay",
+      ),
+      Contributor(
+        name: "kastov",
+        link: "https://github.com/kastov",
+      ),
+      Contributor(
+        name: "katsukibtw",
+        link: "https://github.com/katsukibtw",
+      ),
+      Contributor(
+        name: "prettyleaf",
+        link: "https://github.com/prettyleaf",
+      ),
+      Contributor(
+        name: "mitsuha44",
+        link: "https://github.com/mitsuha44",
+      ),
+    ];
+    return [
+      ...generateSection(
+        separated: false,
+        title: appLocalizations.forkCreator,
+        items: [
+          ListItem(
+            title: Text(appLocalizations.forkCreatorDesc),
+            subtitle: Text(appLocalizations.forkIntro),
+            onTap: () {
+              globalState.openUrl(
+                "https://github.com/NeroBaxmond",
+              );
+            },
+            trailing: const Icon(Icons.insert_link),
+          ),
+        ],
+      ),
+      ...generateSection(
+        separated: false,
+        title: appLocalizations.originalDevelopers,
+        items: [
+          ListItem(
+            title: Wrap(
+              spacing: 16,
+              runSpacing: 12,
+              children: [
+                for (final developer in originalDevelopers)
+                  Avatar(
+                    contributor: developer,
+                  ),
+              ],
+            ),
+          ),
+          ListItem(
+            title: Text(appLocalizations.originalDevelopersDesc),
+          ),
+        ],
+      ),
+    ];
+  }
+
   List<Widget> _buildMoreSection(BuildContext context) => generateSection(
         separated: false,
         title: appLocalizations.more,
@@ -295,10 +363,21 @@ class AboutView extends StatelessWidget {
       const SizedBox(
         height: 12,
       ),
+      ..._buildForkSection(context),
       ..._buildContributorsSection(),
       ..._buildThanksForContributionSection(context),
       ..._buildGratitudeSection(context),
       ..._buildMoreSection(context),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+        child: Text(
+          appLocalizations.aiNote,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontStyle: FontStyle.italic,
+              ),
+        ),
+      ),
     ];
     return Padding(
       padding: kMaterialListPadding.copyWith(

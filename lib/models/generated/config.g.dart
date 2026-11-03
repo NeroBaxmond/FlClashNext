@@ -24,6 +24,11 @@ _$AppSettingPropsImpl _$$AppSettingPropsImplFromJson(
       autoCheckUpdate: json['autoCheckUpdate'] as bool? ?? false,
       showLabel: json['showLabel'] as bool? ?? false,
       disclaimerAccepted: json['disclaimerAccepted'] as bool? ?? false,
+      energySaving: json['energySaving'] as bool? ?? false,
+      showHeroStatus: json['showHeroStatus'] as bool? ?? true,
+      showHeroConnect: json['showHeroConnect'] as bool? ?? true,
+      showHeroServer: json['showHeroServer'] as bool? ?? true,
+      showHeroDetails: json['showHeroDetails'] as bool? ?? true,
       minimizeOnExit: json['minimizeOnExit'] as bool? ?? false,
       hidden: json['hidden'] as bool? ?? false,
       developerMode: json['developerMode'] as bool? ?? false,
@@ -57,6 +62,11 @@ Map<String, dynamic> _$$AppSettingPropsImplToJson(
       'autoCheckUpdate': instance.autoCheckUpdate,
       'showLabel': instance.showLabel,
       'disclaimerAccepted': instance.disclaimerAccepted,
+      'energySaving': instance.energySaving,
+      'showHeroStatus': instance.showHeroStatus,
+      'showHeroConnect': instance.showHeroConnect,
+      'showHeroServer': instance.showHeroServer,
+      'showHeroDetails': instance.showHeroDetails,
       'minimizeOnExit': instance.minimizeOnExit,
       'hidden': instance.hidden,
       'developerMode': instance.developerMode,
@@ -197,18 +207,18 @@ const _$RouteModeEnumMap = {
 _$ProxiesStyleImpl _$$ProxiesStyleImplFromJson(Map<String, dynamic> json) =>
     _$ProxiesStyleImpl(
       type: $enumDecodeNullable(_$ProxiesTypeEnumMap, json['type']) ??
-          ProxiesType.list,
+          ProxiesType.tab,
       sortType:
           $enumDecodeNullable(_$ProxiesSortTypeEnumMap, json['sortType']) ??
               ProxiesSortType.none,
       layout: $enumDecodeNullable(_$ProxiesLayoutEnumMap, json['layout']) ??
-          ProxiesLayout.standard,
+          ProxiesLayout.loose,
       iconStyle: $enumDecodeNullable(
               _$ProxiesIconStyleEnumMap, json['iconStyle'],
               unknownValue: ProxiesIconStyle.icon) ??
           ProxiesIconStyle.icon,
       cardType: $enumDecodeNullable(_$ProxyCardTypeEnumMap, json['cardType']) ??
-          ProxyCardType.expand,
+          ProxyCardType.oneline,
       iconMap: (json['iconMap'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(k, e as String),
           ) ??
@@ -277,8 +287,8 @@ _$ThemePropsImpl _$$ThemePropsImplFromJson(Map<String, dynamic> json) =>
           ThemeMode.system,
       schemeVariant: $enumDecodeNullable(
               _$DynamicSchemeVariantEnumMap, json['schemeVariant']) ??
-          DynamicSchemeVariant.content,
-      pureBlack: json['pureBlack'] as bool? ?? false,
+          DynamicSchemeVariant.tonalSpot,
+      pureBlack: json['pureBlack'] as bool? ?? true,
       textScale: json['textScale'] == null
           ? const TextScale()
           : TextScale.fromJson(json['textScale'] as Map<String, dynamic>),

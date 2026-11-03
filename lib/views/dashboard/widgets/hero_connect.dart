@@ -12,7 +12,6 @@ import 'package:flclashx/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -203,8 +202,7 @@ class _FocusableTapState extends State<_FocusableTap> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius + 4),
           border: Border.all(
-            color:
-                _focused ? context.colorScheme.primary : Colors.transparent,
+            color: _focused ? context.colorScheme.primary : Colors.transparent,
             width: 2,
           ),
         ),
@@ -230,10 +228,9 @@ class HeroConnect extends ConsumerWidget {
     if (!state.hasProfile) return const _EmptyHero();
 
     final isReady = state.isInit;
+    final heroSettings = ref.watch(appSettingProvider);
     final profile = ref.watch(currentProfileProvider);
     final headers = profile?.providerHeaders ?? {};
-    final serviceName = _decodeBase64(headers['flclashx-servicename']) ?? appName;
-    final logoUrl = _decodeBase64(headers['flclashx-servicelogo']);
     final announce = _decodeAnnounce(headers['announce']);
     final sub = profile?.subscriptionInfo;
     // Only show the traffic card when there's something to show — a data limit or an
@@ -271,7 +268,8 @@ class HeroConnect extends ConsumerWidget {
     // resolveToDisplayName). Fall back to the first group with a live selection.
     final serverInfoHeader = headers['flclashx-serverinfo'];
     if (serverInfoHeader != null && serverInfoHeader.isNotEmpty) {
-      final groupName = _decodeBase64(serverInfoHeader) ?? serverInfoHeader.trim();
+      final groupName =
+          _decodeBase64(serverInfoHeader) ?? serverInfoHeader.trim();
       final group = groups.getGroup(groupName);
       if (group != null) {
         activeGroup = group;
@@ -279,8 +277,31 @@ class HeroConnect extends ConsumerWidget {
         testUrl = group.testUrl;
       }
     }
+    // The subscription's primary (first) group wins over everything else:
+    // whatever it points at - a hand-picked server, a sub-group or the
+    // auto-select group - is what traffic actually uses, so that is what the
+    // dashboard must show. Only when it has no live pick do we fall back to
+    // the first group that does.
     if (serverName.isEmpty) {
-      for (final g in groups) {
+      // The subscription's primary (first) group wins over everything else:
+      // whatever it points at - a hand-picked server, a sub-group or the
+      // auto-select group - is what traffic actually uses, so that is what
+      // the dashboard must show. Only when it has no live pick do we fall
+      // back to the first group that does.
+      // The auto-select group injected by FlClash Next is skipped: it sits
+      // first in proxy-groups but is not the subscription's primary group.
+      final autoSelect = profile?.autoSelect;
+      final autoNames = <String>{
+        if (autoSelect != null && autoSelect.realEnable) autoSelect.name,
+      };
+      final candidates = groups
+          .where((g) => !autoNames.contains(g.name))
+          .toList(growable: false);
+      final primary = [
+        if (candidates.isNotEmpty) candidates.first,
+        ...candidates,
+      ];
+      for (final g in primary) {
         final now = g.realNow;
         if (now.isNotEmpty && now != 'DIRECT' && now != 'REJECT') {
           activeGroup = g;
@@ -292,8 +313,9 @@ class HeroConnect extends ConsumerWidget {
     }
     final displayName = _stripLeadingEmoji(serverName);
     final nameCountryCode = _flagToCountryCode(serverName);
-    final groupFlagCodes =
-        activeGroup != null ? _collectGroupFlags(groups, activeGroup) : const <String>[];
+    final groupFlagCodes = activeGroup != null
+        ? _collectGroupFlags(groups, activeGroup)
+        : const <String>[];
     // Other locations in the group: their distinct flag countries (shown as stacked
     // flags behind the active one) plus a total count (the badge). Falls back to the
     // sibling-proxy count when node names carry no flag emoji.
@@ -307,98 +329,119 @@ class HeroConnect extends ConsumerWidget {
 
     return Column(
       children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                _Logo(logoUrl: logoUrl),
-                const SizedBox(height: 16),
-                Text(
-                  serviceName,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                if (announce != null && announce.isNotEmpty) ...[
-                  const SizedBox(height: 16),
-                  _AnnounceBanner(text: announce),
-                ],
-                const SizedBox(height: 18),
-                _HeroActionRow(
-                  isUpdating: profile?.isUpdating ?? false,
-                  onUpdate: profile == null
-                      ? null
-                      : () => globalState.appController.updateProfile(profile),
-                  supportUrl: headers['support-url'],
-                ),
-                const SizedBox(height: 18),
-                if (hasSub) ...[
-                  _TrafficCard(sub: sub),
-                  const SizedBox(height: 12),
-                ],
-                if (showBuy) ...[
-                  _BuyButtons(
-                    showBuyPlan: showBuyPlan,
-                    showBuyTraffic: showBuyTraffic,
-                    buyPlanUrl: buyPlanUrl,
-                    buyTrafficUrl: buyTrafficUrl,
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                _ServerPanel(
-                  serverName: serverName,
-                  displayName: displayName,
-                  nameCountryCode: nameCountryCode,
-                  testUrl: testUrl,
-                  otherCodes: otherCodes,
-                  otherLocations: otherLocations,
-                ),
-              ],
-            ),
+        if (heroSettings.showHeroStatus) ...[
+          _HeroStatus(isReady: isReady),
+          const SizedBox(height: 14),
+        ],
+        // Flexible spacers push the button to the middle and the server panel
+        // to the bottom of the space the dashboard gives the hero. They are
+        // zero-height in the intrinsic pass, so the hero never overflows when
+        // classic cards below claim the room first.
+        const Spacer(),
+        if (heroSettings.showHeroConnect) ...[
+          _ConnectButton(isReady: isReady, large: true),
+          const SizedBox(height: 18),
+        ],
+        if (heroSettings.showHeroDetails &&
+            announce != null &&
+            announce.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _AnnounceBanner(text: announce),
+        ],
+        if (heroSettings.showHeroDetails) ...[
+          const SizedBox(height: 18),
+          _HeroActionRow(
+            isUpdating: profile?.isUpdating ?? false,
+            onUpdate: profile == null
+                ? null
+                : () => globalState.appController.updateProfile(profile),
+            supportUrl: headers['support-url'],
           ),
-        ),
-        // Pinned to the bottom of the hero, just above the nav bar.
-        const SizedBox(height: 14),
-        _ConnectButton(isReady: isReady),
+          const SizedBox(height: 18),
+          if (hasSub) ...[
+            _TrafficCard(sub: sub),
+            const SizedBox(height: 12),
+          ],
+          if (showBuy) ...[
+            _BuyButtons(
+              showBuyPlan: showBuyPlan,
+              showBuyTraffic: showBuyTraffic,
+              buyPlanUrl: buyPlanUrl,
+              buyTrafficUrl: buyTrafficUrl,
+            ),
+            const SizedBox(height: 12),
+          ],
+        ],
+        if (heroSettings.showHeroServer)
+          _ServerPanel(
+            groupName: activeGroup?.name,
+            serverName: serverName,
+            displayName: displayName,
+            nameCountryCode: nameCountryCode,
+            testUrl: testUrl,
+            otherCodes: otherCodes,
+            otherLocations: otherLocations,
+          ),
+        if (heroSettings.showHeroDetails) ...[
+          const SizedBox(height: 10),
+          const _HeroMoreHint(),
+        ],
       ],
     );
   }
 }
 
-// ----------------------------------------------------------------------------
-// Logo
-// ----------------------------------------------------------------------------
-class _Logo extends StatelessWidget {
-  const _Logo({this.logoUrl});
-
-  final String? logoUrl;
+class _HeroStatus extends ConsumerWidget {
+  const _HeroStatus({required this.isReady});
+  final bool isReady;
 
   @override
-  Widget build(BuildContext context) {
-    const size = 104.0;
-    final fallback = ClipRRect(
-      borderRadius: BorderRadius.circular(26),
-      child: Image.asset('assets/images/icon.png', width: size, height: size, fit: BoxFit.cover),
-    );
-    if (logoUrl == null || logoUrl!.isEmpty) return fallback;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(26),
-      child: logoUrl!.toLowerCase().endsWith('.svg')
-          ? SvgPicture.network(logoUrl!, width: size, height: size,
-              placeholderBuilder: (_) => fallback)
-          : CachedNetworkImage(
-              imageUrl: logoUrl!,
-              width: size,
-              height: size,
-              fit: BoxFit.cover,
-              errorWidget: (_, __, ___) => fallback,
-            ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final connected = ref.watch(runTimeProvider) != null;
+    final color = connected
+        ? context.colorScheme.primary
+        : context.colorScheme.onSurfaceVariant;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          connected ? Icons.check_circle_rounded : Icons.circle_outlined,
+          size: 18,
+          color: isReady ? color : color.withValues(alpha: 0.45),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          connected
+              ? appLocalizations.coreStatusRunning
+              : appLocalizations.start,
+          style: context.textTheme.titleMedium?.copyWith(
+            color: isReady ? color : color.withValues(alpha: 0.45),
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
     );
   }
+}
+
+class _HeroMoreHint extends StatelessWidget {
+  const _HeroMoreHint();
+
+  @override
+  Widget build(BuildContext context) => Column(
+        children: [
+          Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: context.colorScheme.onSurfaceVariant,
+          ),
+          Text(
+            appLocalizations.dashboard,
+            style: context.textTheme.labelMedium?.copyWith(
+              color: context.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ],
+      );
 }
 
 // ----------------------------------------------------------------------------
@@ -439,7 +482,8 @@ class _TrafficCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: colorScheme.surfaceContainerHigh.withValues(alpha: 0.6),
-        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.6)),
+        border: Border.all(
+            color: colorScheme.outlineVariant.withValues(alpha: 0.6)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -462,7 +506,8 @@ class _TrafficCard extends StatelessWidget {
               if (daysLeft != null) ...[
                 const SizedBox(width: 10),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: daysColor.withValues(alpha: 0.14),
@@ -491,7 +536,8 @@ class _TrafficCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Stack(
                 children: [
-                  Container(height: 9, color: colorScheme.surfaceContainerHighest),
+                  Container(
+                      height: 9, color: colorScheme.surfaceContainerHighest),
                   FractionallySizedBox(
                     widthFactor: progress <= 0 ? 0.0 : progress,
                     child: Container(
@@ -622,6 +668,7 @@ class _HeroBuyButton extends StatelessWidget {
 // ----------------------------------------------------------------------------
 class _ServerPanel extends ConsumerWidget {
   const _ServerPanel({
+    required this.groupName,
     required this.serverName,
     required this.displayName,
     required this.nameCountryCode,
@@ -630,6 +677,7 @@ class _ServerPanel extends ConsumerWidget {
     this.otherLocations = 0,
   });
 
+  final String? groupName;
   final String serverName;
   final String displayName;
   final String? nameCountryCode;
@@ -669,7 +717,8 @@ class _ServerPanel extends ConsumerWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
               color: colorScheme.surfaceContainerHigh.withValues(alpha: 0.6),
-              border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.6)),
+              border: Border.all(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.6)),
             ),
             child: Row(
               children: [
@@ -686,8 +735,20 @@ class _ServerPanel extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
+                        groupName?.isNotEmpty == true ? groupName! : 'Proxy',
+                        style: context.textTheme.labelMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
                         title,
-                        style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                        style: context.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -707,7 +768,8 @@ class _ServerPanel extends ConsumerWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           )
-                        else if (networkState.isTesting || networkState.isLoading)
+                        else if (networkState.isTesting ||
+                            networkState.isLoading)
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -758,7 +820,8 @@ class _ServerPanel extends ConsumerWidget {
                           '$delay ms',
                           textAlign: TextAlign.center,
                           style: context.textTheme.labelSmall?.copyWith(
-                            color: utils.getDelayColor(delay) ?? colorScheme.onSurfaceVariant,
+                            color: utils.getDelayColor(delay) ??
+                                colorScheme.onSurfaceVariant,
                             fontWeight: FontWeight.w600,
                             fontFamily: FontFamily.jetBrainsMono.value,
                           ),
@@ -812,7 +875,8 @@ class _FlagCircle extends StatelessWidget {
             color: colorScheme.surfaceContainerHighest,
           ),
           alignment: Alignment.center,
-          child: EmojiText(fallbackEmoji, style: const TextStyle(fontSize: size * 0.5)),
+          child: EmojiText(fallbackEmoji,
+              style: const TextStyle(fontSize: size * 0.5)),
         );
 
     final active = cc.length != 2
@@ -862,7 +926,8 @@ class _FlagCircle extends StatelessWidget {
                 ),
                 // Depth scrim: deeper cards are darker.
                 Positioned.fill(
-                  child: ColoredBox(color: Colors.black.withValues(alpha: 0.15 * i)),
+                  child: ColoredBox(
+                      color: Colors.black.withValues(alpha: 0.15 * i)),
                 ),
               ],
             ),
@@ -906,7 +971,10 @@ class _FlagCircle extends StatelessWidget {
     // vertically centred in the row.
     final topPeek = backs.isEmpty
         ? 0.0
-        : (10.0 * backs.length + size * (1 - 0.14 * backs.length) / 2 - size / 2 + 2)
+        : (10.0 * backs.length +
+                size * (1 - 0.14 * backs.length) / 2 -
+                size / 2 +
+                2)
             .clamp(0.0, 40.0)
             .toDouble();
     final bottomPeek = badge != null ? 7.0 : 0.0;
@@ -920,7 +988,8 @@ class _FlagCircle extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(top: topPeek, left: 0, width: size, height: size, child: unit),
+          Positioned(
+              top: topPeek, left: 0, width: size, height: size, child: unit),
         ],
       ),
     );
@@ -961,17 +1030,19 @@ class _SignalBars extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: List.generate(4, (i) => Padding(
-          padding: EdgeInsets.only(left: i == 0 ? 0 : 3),
-          child: Container(
-            width: 4,
-            height: heights[i],
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: i < level ? color : dim,
-            ),
-          ),
-        )),
+      children: List.generate(
+          4,
+          (i) => Padding(
+                padding: EdgeInsets.only(left: i == 0 ? 0 : 3),
+                child: Container(
+                  width: 4,
+                  height: heights[i],
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2),
+                    color: i < level ? color : dim,
+                  ),
+                ),
+              )),
     );
   }
 }
@@ -980,9 +1051,10 @@ class _SignalBars extends StatelessWidget {
 // Connect button — shows the time counter while connected
 // ----------------------------------------------------------------------------
 class _ConnectButton extends ConsumerWidget {
-  const _ConnectButton({required this.isReady});
+  const _ConnectButton({required this.isReady, this.large = false});
 
   final bool isReady;
+  final bool large;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -1016,11 +1088,12 @@ class _ConnectButton extends ConsumerWidget {
           : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        width: double.infinity,
-        height: 54,
+        width: large ? 164 : double.infinity,
+        height: large ? 164 : 54,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
+          shape: large ? BoxShape.circle : BoxShape.rectangle,
+          borderRadius: large ? null : BorderRadius.circular(24),
           color: bg,
           border: isStart
               ? Border.all(color: colorScheme.primary.withValues(alpha: 0.4))
@@ -1028,16 +1101,24 @@ class _ConnectButton extends ConsumerWidget {
         ),
         // Running: uptime only. Stopped: just a Play glyph (no "Start" label).
         child: isStart
-            ? Text(
-                utils.getTimeText(runTime),
-                style: context.textTheme.titleSmall?.copyWith(
-                  color: fg,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.5,
-                  fontFamily: FontFamily.jetBrainsMono.value,
-                ),
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.power_settings_new_rounded, size: 42),
+                  const SizedBox(height: 6),
+                  Text(
+                    utils.getTimeText(runTime),
+                    style: context.textTheme.titleSmall?.copyWith(
+                      color: fg,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                      fontFamily: FontFamily.jetBrainsMono.value,
+                    ),
+                  ),
+                ],
               )
-            : Icon(Icons.play_arrow_rounded, size: 30, color: fg),
+            : Icon(Icons.power_settings_new_rounded,
+                size: large ? 58 : 30, color: fg),
       ),
     );
   }
@@ -1056,11 +1137,10 @@ class _EmptyHero extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 8),
-        const _Logo(),
-        const SizedBox(height: 16),
         Text(
           appName,
-          style: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+          style: context.textTheme.headlineSmall
+              ?.copyWith(fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 24),
         _FocusableTap(
@@ -1263,7 +1343,8 @@ class _ActionChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHigh.withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.6)),
+          border: Border.all(
+              color: colorScheme.outlineVariant.withValues(alpha: 0.6)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

@@ -35,6 +35,14 @@ mixin _$AppSettingProps {
   bool get autoCheckUpdate => throw _privateConstructorUsedError;
   bool get showLabel => throw _privateConstructorUsedError;
   bool get disclaimerAccepted => throw _privateConstructorUsedError;
+
+  /// Enables the optional background throttling introduced by FlClash Next.
+  /// Disabled by default so the app keeps the original FlClash behaviour.
+  bool get energySaving => throw _privateConstructorUsedError;
+  bool get showHeroStatus => throw _privateConstructorUsedError;
+  bool get showHeroConnect => throw _privateConstructorUsedError;
+  bool get showHeroServer => throw _privateConstructorUsedError;
+  bool get showHeroDetails => throw _privateConstructorUsedError;
   bool get minimizeOnExit => throw _privateConstructorUsedError;
   bool get hidden => throw _privateConstructorUsedError;
   bool get developerMode => throw _privateConstructorUsedError;
@@ -76,6 +84,11 @@ abstract class $AppSettingPropsCopyWith<$Res> {
       bool autoCheckUpdate,
       bool showLabel,
       bool disclaimerAccepted,
+      bool energySaving,
+      bool showHeroStatus,
+      bool showHeroConnect,
+      bool showHeroServer,
+      bool showHeroDetails,
       bool minimizeOnExit,
       bool hidden,
       bool developerMode,
@@ -115,6 +128,11 @@ class _$AppSettingPropsCopyWithImpl<$Res, $Val extends AppSettingProps>
     Object? autoCheckUpdate = null,
     Object? showLabel = null,
     Object? disclaimerAccepted = null,
+    Object? energySaving = null,
+    Object? showHeroStatus = null,
+    Object? showHeroConnect = null,
+    Object? showHeroServer = null,
+    Object? showHeroDetails = null,
     Object? minimizeOnExit = null,
     Object? hidden = null,
     Object? developerMode = null,
@@ -177,6 +195,26 @@ class _$AppSettingPropsCopyWithImpl<$Res, $Val extends AppSettingProps>
       disclaimerAccepted: null == disclaimerAccepted
           ? _value.disclaimerAccepted
           : disclaimerAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      energySaving: null == energySaving
+          ? _value.energySaving
+          : energySaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroStatus: null == showHeroStatus
+          ? _value.showHeroStatus
+          : showHeroStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroConnect: null == showHeroConnect
+          ? _value.showHeroConnect
+          : showHeroConnect // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroServer: null == showHeroServer
+          ? _value.showHeroServer
+          : showHeroServer // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroDetails: null == showHeroDetails
+          ? _value.showHeroDetails
+          : showHeroDetails // ignore: cast_nullable_to_non_nullable
               as bool,
       minimizeOnExit: null == minimizeOnExit
           ? _value.minimizeOnExit
@@ -241,6 +279,11 @@ abstract class _$$AppSettingPropsImplCopyWith<$Res>
       bool autoCheckUpdate,
       bool showLabel,
       bool disclaimerAccepted,
+      bool energySaving,
+      bool showHeroStatus,
+      bool showHeroConnect,
+      bool showHeroServer,
+      bool showHeroDetails,
       bool minimizeOnExit,
       bool hidden,
       bool developerMode,
@@ -278,6 +321,11 @@ class __$$AppSettingPropsImplCopyWithImpl<$Res>
     Object? autoCheckUpdate = null,
     Object? showLabel = null,
     Object? disclaimerAccepted = null,
+    Object? energySaving = null,
+    Object? showHeroStatus = null,
+    Object? showHeroConnect = null,
+    Object? showHeroServer = null,
+    Object? showHeroDetails = null,
     Object? minimizeOnExit = null,
     Object? hidden = null,
     Object? developerMode = null,
@@ -341,6 +389,26 @@ class __$$AppSettingPropsImplCopyWithImpl<$Res>
           ? _value.disclaimerAccepted
           : disclaimerAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
+      energySaving: null == energySaving
+          ? _value.energySaving
+          : energySaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroStatus: null == showHeroStatus
+          ? _value.showHeroStatus
+          : showHeroStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroConnect: null == showHeroConnect
+          ? _value.showHeroConnect
+          : showHeroConnect // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroServer: null == showHeroServer
+          ? _value.showHeroServer
+          : showHeroServer // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showHeroDetails: null == showHeroDetails
+          ? _value.showHeroDetails
+          : showHeroDetails // ignore: cast_nullable_to_non_nullable
+              as bool,
       minimizeOnExit: null == minimizeOnExit
           ? _value.minimizeOnExit
           : minimizeOnExit // ignore: cast_nullable_to_non_nullable
@@ -399,6 +467,11 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
       this.autoCheckUpdate = false,
       this.showLabel = false,
       this.disclaimerAccepted = false,
+      this.energySaving = false,
+      this.showHeroStatus = true,
+      this.showHeroConnect = true,
+      this.showHeroServer = true,
+      this.showHeroDetails = true,
       this.minimizeOnExit = false,
       this.hidden = false,
       this.developerMode = false,
@@ -458,6 +531,24 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
   @override
   @JsonKey()
   final bool disclaimerAccepted;
+
+  /// Enables the optional background throttling introduced by FlClash Next.
+  /// Disabled by default so the app keeps the original FlClash behaviour.
+  @override
+  @JsonKey()
+  final bool energySaving;
+  @override
+  @JsonKey()
+  final bool showHeroStatus;
+  @override
+  @JsonKey()
+  final bool showHeroConnect;
+  @override
+  @JsonKey()
+  final bool showHeroServer;
+  @override
+  @JsonKey()
+  final bool showHeroDetails;
   @override
   @JsonKey()
   final bool minimizeOnExit;
@@ -487,7 +578,7 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
 
   @override
   String toString() {
-    return 'AppSettingProps(locale: $locale, dashboardWidgets: $dashboardWidgets, onlyStatisticsProxy: $onlyStatisticsProxy, autoLaunch: $autoLaunch, silentLaunch: $silentLaunch, autoRun: $autoRun, openLogs: $openLogs, closeConnections: $closeConnections, testUrl: $testUrl, isAnimateToPage: $isAnimateToPage, autoCheckUpdate: $autoCheckUpdate, showLabel: $showLabel, disclaimerAccepted: $disclaimerAccepted, minimizeOnExit: $minimizeOnExit, hidden: $hidden, developerMode: $developerMode, crashlytics: $crashlytics, zashboardInApp: $zashboardInApp, overrideProviderSettings: $overrideProviderSettings, overrideNetworkSettings: $overrideNetworkSettings, recoveryStrategy: $recoveryStrategy, newDashboard: $newDashboard)';
+    return 'AppSettingProps(locale: $locale, dashboardWidgets: $dashboardWidgets, onlyStatisticsProxy: $onlyStatisticsProxy, autoLaunch: $autoLaunch, silentLaunch: $silentLaunch, autoRun: $autoRun, openLogs: $openLogs, closeConnections: $closeConnections, testUrl: $testUrl, isAnimateToPage: $isAnimateToPage, autoCheckUpdate: $autoCheckUpdate, showLabel: $showLabel, disclaimerAccepted: $disclaimerAccepted, energySaving: $energySaving, showHeroStatus: $showHeroStatus, showHeroConnect: $showHeroConnect, showHeroServer: $showHeroServer, showHeroDetails: $showHeroDetails, minimizeOnExit: $minimizeOnExit, hidden: $hidden, developerMode: $developerMode, crashlytics: $crashlytics, zashboardInApp: $zashboardInApp, overrideProviderSettings: $overrideProviderSettings, overrideNetworkSettings: $overrideNetworkSettings, recoveryStrategy: $recoveryStrategy, newDashboard: $newDashboard)';
   }
 
   @override
@@ -518,6 +609,16 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
                 other.showLabel == showLabel) &&
             (identical(other.disclaimerAccepted, disclaimerAccepted) ||
                 other.disclaimerAccepted == disclaimerAccepted) &&
+            (identical(other.energySaving, energySaving) ||
+                other.energySaving == energySaving) &&
+            (identical(other.showHeroStatus, showHeroStatus) ||
+                other.showHeroStatus == showHeroStatus) &&
+            (identical(other.showHeroConnect, showHeroConnect) ||
+                other.showHeroConnect == showHeroConnect) &&
+            (identical(other.showHeroServer, showHeroServer) ||
+                other.showHeroServer == showHeroServer) &&
+            (identical(other.showHeroDetails, showHeroDetails) ||
+                other.showHeroDetails == showHeroDetails) &&
             (identical(other.minimizeOnExit, minimizeOnExit) ||
                 other.minimizeOnExit == minimizeOnExit) &&
             (identical(other.hidden, hidden) || other.hidden == hidden) &&
@@ -556,6 +657,11 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
         autoCheckUpdate,
         showLabel,
         disclaimerAccepted,
+        energySaving,
+        showHeroStatus,
+        showHeroConnect,
+        showHeroServer,
+        showHeroDetails,
         minimizeOnExit,
         hidden,
         developerMode,
@@ -600,6 +706,11 @@ abstract class _AppSettingProps implements AppSettingProps {
       final bool autoCheckUpdate,
       final bool showLabel,
       final bool disclaimerAccepted,
+      final bool energySaving,
+      final bool showHeroStatus,
+      final bool showHeroConnect,
+      final bool showHeroServer,
+      final bool showHeroDetails,
       final bool minimizeOnExit,
       final bool hidden,
       final bool developerMode,
@@ -640,6 +751,19 @@ abstract class _AppSettingProps implements AppSettingProps {
   bool get showLabel;
   @override
   bool get disclaimerAccepted;
+
+  /// Enables the optional background throttling introduced by FlClash Next.
+  /// Disabled by default so the app keeps the original FlClash behaviour.
+  @override
+  bool get energySaving;
+  @override
+  bool get showHeroStatus;
+  @override
+  bool get showHeroConnect;
+  @override
+  bool get showHeroServer;
+  @override
+  bool get showHeroDetails;
   @override
   bool get minimizeOnExit;
   @override
@@ -1672,6 +1796,7 @@ ProxiesStyle _$ProxiesStyleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProxiesStyle {
+// FlClash Next defaults: tabbed groups, loose layout, one-line cards.
   ProxiesType get type => throw _privateConstructorUsedError;
   ProxiesSortType get sortType => throw _privateConstructorUsedError;
   ProxiesLayout get layout => throw _privateConstructorUsedError;
@@ -1828,18 +1953,19 @@ class __$$ProxiesStyleImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProxiesStyleImpl implements _ProxiesStyle {
   const _$ProxiesStyleImpl(
-      {this.type = ProxiesType.list,
+      {this.type = ProxiesType.tab,
       this.sortType = ProxiesSortType.none,
-      this.layout = ProxiesLayout.standard,
+      this.layout = ProxiesLayout.loose,
       @JsonKey(unknownEnumValue: ProxiesIconStyle.icon)
       this.iconStyle = ProxiesIconStyle.icon,
-      this.cardType = ProxyCardType.expand,
+      this.cardType = ProxyCardType.oneline,
       final Map<String, String> iconMap = const {}})
       : _iconMap = iconMap;
 
   factory _$ProxiesStyleImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProxiesStyleImplFromJson(json);
 
+// FlClash Next defaults: tabbed groups, loose layout, one-line cards.
   @override
   @JsonKey()
   final ProxiesType type;
@@ -1919,6 +2045,7 @@ abstract class _ProxiesStyle implements ProxiesStyle {
   factory _ProxiesStyle.fromJson(Map<String, dynamic> json) =
       _$ProxiesStyleImpl.fromJson;
 
+// FlClash Next defaults: tabbed groups, loose layout, one-line cards.
   @override
   ProxiesType get type;
   @override
@@ -2282,8 +2409,8 @@ class _$ThemePropsImpl implements _ThemeProps {
       {this.primaryColor,
       final List<int> primaryColors = defaultPrimaryColors,
       this.themeMode = ThemeMode.system,
-      this.schemeVariant = DynamicSchemeVariant.content,
-      this.pureBlack = false,
+      this.schemeVariant = DynamicSchemeVariant.tonalSpot,
+      this.pureBlack = true,
       this.textScale = const TextScale()})
       : _primaryColors = primaryColors;
 

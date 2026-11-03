@@ -1124,7 +1124,7 @@ final globalModeEnabledProvider = AutoDisposeProvider<bool>.internal(
 // ignore: unused_element
 typedef GlobalModeEnabledRef = AutoDisposeProviderRef<bool>;
 String _$newDashboardEnabledHash() =>
-    r'092ed1731d3ca9eb4640f09e2e749c72e651347e';
+    r'ea80392c2e31319e3e8c3f4b73b62ff2555bf532';
 
 /// Single source of truth for whether the "new look" (hero) dashboard is shown.
 /// Just the `newDashboard` setting — the toggle is never locked. The

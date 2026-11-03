@@ -68,6 +68,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "adminAutoLaunchDesc": MessageLookupByLibrary.simpleMessage("使用管理员模式开机自启动"),
     "ago": MessageLookupByLibrary.simpleMessage("前"),
     "agree": MessageLookupByLibrary.simpleMessage("同意"),
+    "aiNote": MessageLookupByLibrary.simpleMessage(
+      "部分代码借助 AI 编写，并由维护者审核、调整和测试。",
+    ),
     "allApps": MessageLookupByLibrary.simpleMessage("所有应用"),
     "allowBypass": MessageLookupByLibrary.simpleMessage("允许应用绕过VPN"),
     "allowBypassDesc": MessageLookupByLibrary.simpleMessage("开启后部分应用可绕过VPN"),
@@ -138,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkUpdate": MessageLookupByLibrary.simpleMessage("检查更新"),
     "checkUpdateError": MessageLookupByLibrary.simpleMessage("当前应用已经是最新版了"),
     "checking": MessageLookupByLibrary.simpleMessage("检测中..."),
+    "classicDashboard": MessageLookupByLibrary.simpleMessage("经典仪表盘"),
     "clearData": MessageLookupByLibrary.simpleMessage("清除数据"),
     "clearDataTip": MessageLookupByLibrary.simpleMessage(
       "这将删除所有应用数据并重新启动应用程序。您确定吗？",
@@ -210,6 +214,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyTip": m2,
     "en": MessageLookupByLibrary.simpleMessage("英语"),
     "enableOverride": MessageLookupByLibrary.simpleMessage("启用覆写"),
+    "energySaving": MessageLookupByLibrary.simpleMessage("省电模式"),
+    "energySavingDesc": MessageLookupByLibrary.simpleMessage(
+      "减少后台更新和健康检查以节省电量",
+    ),
+    "energySavingEnabledDesc": MessageLookupByLibrary.simpleMessage(
+      "关闭后，FlClash Next 将使用原版 FlClash 的后台和 keep-alive 行为。",
+    ),
     "entries": MessageLookupByLibrary.simpleMessage("个条目"),
     "exclude": MessageLookupByLibrary.simpleMessage("从最近任务中隐藏"),
     "excludeDesc": MessageLookupByLibrary.simpleMessage("应用在后台时,从最近任务中隐藏应用"),
@@ -241,6 +252,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "findProcessMode": MessageLookupByLibrary.simpleMessage("查找进程"),
     "findProcessModeDesc": MessageLookupByLibrary.simpleMessage("开启后会有一定性能损耗"),
     "fontFamily": MessageLookupByLibrary.simpleMessage("字体"),
+    "forkCreator": MessageLookupByLibrary.simpleMessage("分支创建者"),
+    "forkCreatorDesc": MessageLookupByLibrary.simpleMessage(
+      "udizu (NeroBaxmond)",
+    ),
+    "forkIntro": MessageLookupByLibrary.simpleMessage(
+      "FlClash Next 是 FlClash 的个人精修分支，专注于更清晰的首页、稳定的 VPN 运行和智能服务器选择。",
+    ),
     "fourColumns": MessageLookupByLibrary.simpleMessage("四列"),
     "fruitSaladScheme": MessageLookupByLibrary.simpleMessage("果缤纷"),
     "general": MessageLookupByLibrary.simpleMessage("常规"),
@@ -255,6 +273,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "goDownload": MessageLookupByLibrary.simpleMessage("前往下载"),
     "gratitude": MessageLookupByLibrary.simpleMessage("感激"),
     "hasCacheChange": MessageLookupByLibrary.simpleMessage("是否缓存修改"),
+    "heroCards": MessageLookupByLibrary.simpleMessage("新仪表盘卡片"),
+    "heroConnect": MessageLookupByLibrary.simpleMessage("电源按钮"),
+    "heroDetails": MessageLookupByLibrary.simpleMessage("仪表盘详情"),
+    "heroServer": MessageLookupByLibrary.simpleMessage("当前服务器"),
+    "heroStatus": MessageLookupByLibrary.simpleMessage("连接状态"),
     "hostsDesc": MessageLookupByLibrary.simpleMessage("追加Hosts"),
     "hotkeyConflict": MessageLookupByLibrary.simpleMessage("快捷键冲突"),
     "hotkeyManagement": MessageLookupByLibrary.simpleMessage("快捷键管理"),
@@ -353,6 +376,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "openLogsFolder": MessageLookupByLibrary.simpleMessage("打开日志文件夹"),
     "openPanel": MessageLookupByLibrary.simpleMessage("打开面板"),
     "options": MessageLookupByLibrary.simpleMessage("选项"),
+    "originalDevelopers": MessageLookupByLibrary.simpleMessage(
+      "原版 FlClash 开发者",
+    ),
+    "originalDevelopersDesc": MessageLookupByLibrary.simpleMessage(
+      "chen08209、pluralplay、kastov、katsukibtw、prettyleaf、mitsuha44，以及原项目的所有其他贡献者。",
+    ),
     "originalRepository": MessageLookupByLibrary.simpleMessage("原始存储库"),
     "other": MessageLookupByLibrary.simpleMessage("其他"),
     "otherContributors": MessageLookupByLibrary.simpleMessage("贡献者"),

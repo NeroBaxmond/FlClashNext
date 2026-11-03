@@ -456,5 +456,20 @@
   "autoSelectServersEmpty": "请至少选择一个服务器",
   "autoSelectSelectAll": "全选",
   "autoSelectDeselectAll": "清除",
-  "autoSelectProfileOnly": "自动选择仅在当前订阅的服务器内生效。"
+  "autoSelectProfileOnly": "自动选择仅在当前订阅的服务器内生效。",
+  "energySaving": "省电模式",
+  "energySavingDesc": "减少后台更新和健康检查以节省电量",
+  "energySavingEnabledDesc": "关闭后，FlClash Next 将使用原版 FlClash 的后台和 keep-alive 行为。",
+  "classicDashboard": "经典仪表盘",
+  "heroCards": "新仪表盘卡片",
+  "heroStatus": "连接状态",
+  "heroConnect": "电源按钮",
+  "heroServer": "当前服务器",
+  "heroDetails": "仪表盘详情",
+  "forkCreator": "分支创建者",
+  "forkCreatorDesc": "udizu (NeroBaxmond)",
+  "forkIntro": "FlClash Next 是 FlClash 的个人精修分支，专注于更清晰的首页、稳定的 VPN 运行和智能服务器选择。",
+  "originalDevelopers": "原版 FlClash 开发者",
+  "originalDevelopersDesc": "chen08209、pluralplay、kastov、katsukibtw、prettyleaf、mitsuha44，以及原项目的所有其他贡献者。",
+  "aiNote": "部分代码借助 AI 编写，并由维护者审核、调整和测试。"
 }

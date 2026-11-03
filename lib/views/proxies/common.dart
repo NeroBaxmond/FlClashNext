@@ -38,12 +38,14 @@ Future<void> proxyDelayTest(Proxy proxy, [String? testUrl]) async {
     ),
   );
   try {
-    appController.setDelay(
-      await clashCore.getDelay(
-        url,
-        state.proxyName,
-      ),
-    );
+    var result = await clashCore.getDelay(url, state.proxyName);
+    // A single delayed request should not turn a reachable node into a
+    // permanent timeout in the UI. Retry once; the native timeout remains
+    // bounded, so this cannot hang the proxy page.
+    if (result.value == -1) {
+      result = await clashCore.getDelay(url, state.proxyName);
+    }
+    appController.setDelay(result);
   } catch (_) {
     appController.setDelay(
       Delay(
@@ -76,12 +78,11 @@ Future<void> delayTest(List<Proxy> proxies, [String? testUrl]) async {
       ),
     );
     try {
-      appController.setDelay(
-        await clashCore.getDelay(
-          url,
-          name,
-        ),
-      );
+      var result = await clashCore.getDelay(url, name);
+      if (result.value == -1) {
+        result = await clashCore.getDelay(url, name);
+      }
+      appController.setDelay(result);
     } catch (_) {
       appController.setDelay(
         Delay(

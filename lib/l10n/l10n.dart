@@ -4023,6 +4023,156 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Energy saving mode`
+  String get energySaving {
+    return Intl.message(
+      'Energy saving mode',
+      name: 'energySaving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reduce background updates and health checks to save battery`
+  String get energySavingDesc {
+    return Intl.message(
+      'Reduce background updates and health checks to save battery',
+      name: 'energySavingDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When disabled, FlClash Next uses the original FlClash background and keep-alive behaviour.`
+  String get energySavingEnabledDesc {
+    return Intl.message(
+      'When disabled, FlClash Next uses the original FlClash background and keep-alive behaviour.',
+      name: 'energySavingEnabledDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Classic dashboard`
+  String get classicDashboard {
+    return Intl.message(
+      'Classic dashboard',
+      name: 'classicDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New dashboard cards`
+  String get heroCards {
+    return Intl.message(
+      'New dashboard cards',
+      name: 'heroCards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection status`
+  String get heroStatus {
+    return Intl.message(
+      'Connection status',
+      name: 'heroStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Power button`
+  String get heroConnect {
+    return Intl.message(
+      'Power button',
+      name: 'heroConnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected server`
+  String get heroServer {
+    return Intl.message(
+      'Selected server',
+      name: 'heroServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard details`
+  String get heroDetails {
+    return Intl.message(
+      'Dashboard details',
+      name: 'heroDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fork creator`
+  String get forkCreator {
+    return Intl.message(
+      'Fork creator',
+      name: 'forkCreator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `udizu (NeroBaxmond)`
+  String get forkCreatorDesc {
+    return Intl.message(
+      'udizu (NeroBaxmond)',
+      name: 'forkCreatorDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FlClash Next is a personal, polished fork of FlClash focused on a clearer dashboard, reliable VPN operation, and smart server selection.`
+  String get forkIntro {
+    return Intl.message(
+      'FlClash Next is a personal, polished fork of FlClash focused on a clearer dashboard, reliable VPN operation, and smart server selection.',
+      name: 'forkIntro',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Original FlClash developers`
+  String get originalDevelopers {
+    return Intl.message(
+      'Original FlClash developers',
+      name: 'originalDevelopers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `chen08209, pluralplay, kastov, katsukibtw, prettyleaf, mitsuha44 and all other contributors to the original project.`
+  String get originalDevelopersDesc {
+    return Intl.message(
+      'chen08209, pluralplay, kastov, katsukibtw, prettyleaf, mitsuha44 and all other contributors to the original project.',
+      name: 'originalDevelopersDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A small part of the code was written with AI assistance and reviewed, adapted, and tested by the maintainer.`
+  String get aiNote {
+    return Intl.message(
+      'A small part of the code was written with AI assistance and reviewed, adapted, and tested by the maintainer.',
+      name: 'aiNote',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

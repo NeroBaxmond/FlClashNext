@@ -289,7 +289,8 @@ ProfilesSelectorState profilesSelectorState(Ref ref) {
 
 @riverpod
 ProxiesListSelectorState proxiesListSelectorState(Ref ref) {
-  final groupNames = ref.watch(currentGroupsStateProvider.select((state) => state.value.map((e) => e.name).toList()));
+  final groupNames = ref.watch(currentGroupsStateProvider
+      .select((state) => state.value.map((e) => e.name).toList()));
   final currentUnfoldSet = ref.watch(unfoldSetProvider);
   final proxiesStyle = ref.watch(proxiesStyleSettingProvider);
   final sortNum = ref.watch(sortNumProvider);
@@ -328,12 +329,12 @@ ProxiesSelectorState proxiesSelectorState(Ref ref) {
 
 @riverpod
 GroupNamesState groupNamesState(Ref ref) => GroupNamesState(
-    groupNames: ref.watch(
-      currentGroupsStateProvider.select(
-        (state) => state.value.map((e) => e.name).toList(),
+      groupNames: ref.watch(
+        currentGroupsStateProvider.select(
+          (state) => state.value.map((e) => e.name).toList(),
+        ),
       ),
-    ),
-  );
+    );
 
 @riverpod
 ProxyGroupSelectorState proxyGroupSelectorState(Ref ref, String groupName) {
@@ -349,7 +350,9 @@ ProxyGroupSelectorState proxyGroupSelectorState(Ref ref, String groupName) {
   final columns = ref.watch(getProxiesColumnsProvider);
   final query =
       ref.watch(proxiesQueryProvider.select((state) => state.toLowerCase()));
-  final proxies = group?.all.where((item) => item.name.toLowerCase().contains(query)).toList() ??
+  final proxies = group?.all
+          .where((item) => item.name.toLowerCase().contains(query))
+          .toList() ??
       [];
   return ProxyGroupSelectorState(
     testUrl: group?.testUrl,
@@ -376,15 +379,17 @@ PackageListSelectorState packageListSelectorState(Ref ref) {
 @riverpod
 MoreToolsSelectorState moreToolsSelectorState(Ref ref) {
   final viewMode = ref.watch(viewModeProvider);
-  final navigationItems = ref.watch(navigationsStateProvider.select((state) => state.value.where((element) {
-      final isMore = element.modes.contains(NavigationItemMode.more);
-      final isDesktop = element.modes.contains(NavigationItemMode.desktop);
-      if (isMore && !isDesktop) return true;
-      if (viewMode != ViewMode.mobile || !isMore) {
-        return false;
-      }
-      return true;
-    }).toList()));
+  final navigationItems = ref.watch(
+      navigationsStateProvider.select((state) => state.value.where((element) {
+            final isMore = element.modes.contains(NavigationItemMode.more);
+            final isDesktop =
+                element.modes.contains(NavigationItemMode.desktop);
+            if (isMore && !isDesktop) return true;
+            if (viewMode != ViewMode.mobile || !isMore) {
+              return false;
+            }
+            return true;
+          }).toList()));
 
   return MoreToolsSelectorState(navigationItems: navigationItems);
 }
@@ -454,17 +459,17 @@ Set<String> unfoldSet(Ref ref) {
 
 @riverpod
 HotKeyAction getHotKeyAction(Ref ref, HotAction hotAction) => ref.watch(
-    hotKeyActionsProvider.select(
-      (state) {
-        final index = state.indexWhere((item) => item.action == hotAction);
-        return index != -1
-            ? state[index]
-            : HotKeyAction(
-                action: hotAction,
-              );
-      },
-    ),
-  );
+      hotKeyActionsProvider.select(
+        (state) {
+          final index = state.indexWhere((item) => item.action == hotAction);
+          return index != -1
+              ? state[index]
+              : HotKeyAction(
+                  action: hotAction,
+                );
+        },
+      ),
+    );
 
 @riverpod
 Profile? currentProfile(Ref ref) {
@@ -488,8 +493,11 @@ bool globalModeEnabled(Ref ref) {
 /// board on/off through the normal header pipeline rather than overriding here.
 @riverpod
 bool newDashboardEnabled(Ref ref) {
+  // The redesigned hero board is the default face of FlClash Next. Only an
+  // explicit `false` (user toggle or provider header) falls back to the legacy
+  // editable grid.
   return ref.watch(appSettingProvider.select((state) => state.newDashboard)) ??
-      false;
+      true;
 }
 
 @riverpod
@@ -533,7 +541,8 @@ int? backgroundOpacityFromHeader(String? raw) {
 @riverpod
 String? backgroundUrl(Ref ref) {
   final profile = ref.watch(currentProfileProvider);
-  return backgroundUrlFromHeader(profile?.providerHeaders['flclashx-background']);
+  return backgroundUrlFromHeader(
+      profile?.providerHeaders['flclashx-background']);
 }
 
 /// Background image opacity (1-100, higher = more visible) parsed from the optional
@@ -541,7 +550,8 @@ String? backgroundUrl(Ref ref) {
 @riverpod
 int? backgroundOpacity(Ref ref) {
   final profile = ref.watch(currentProfileProvider);
-  return backgroundOpacityFromHeader(profile?.providerHeaders['flclashx-background']);
+  return backgroundOpacityFromHeader(
+      profile?.providerHeaders['flclashx-background']);
 }
 
 @riverpod
@@ -633,8 +643,8 @@ String getProxyDesc(Ref ref, Proxy proxy) {
 class ProfileOverrideState extends _$ProfileOverrideState {
   @override
   ProfileOverrideStateModel build() => const ProfileOverrideStateModel(
-      selectedRules: {},
-    );
+        selectedRules: {},
+      );
 
   void updateState(
     ProfileOverrideStateModel? Function(ProfileOverrideStateModel state)
@@ -650,10 +660,10 @@ class ProfileOverrideState extends _$ProfileOverrideState {
 
 @riverpod
 OverrideData? getProfileOverrideData(Ref ref, String profileId) => ref.watch(
-    profilesProvider.select(
-      (state) => state.getProfile(profileId)?.overrideData,
-    ),
-  );
+      profilesProvider.select(
+        (state) => state.getProfile(profileId)?.overrideData,
+      ),
+    );
 
 @riverpod
 VM2? layoutChange(Ref ref) {

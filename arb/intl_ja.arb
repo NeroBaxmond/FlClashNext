@@ -456,5 +456,20 @@
   "autoSelectServersEmpty": "少なくとも1つのサーバーを選択してください",
   "autoSelectSelectAll": "すべて選択",
   "autoSelectDeselectAll": "解除",
-  "autoSelectProfileOnly": "自動選択は現在のサブスクリプションのサーバー内で機能します。"
+  "autoSelectProfileOnly": "自動選択は現在のサブスクリプションのサーバー内で機能します。",
+  "energySaving": "省電力モード",
+  "energySavingDesc": "バックグラウンド更新とヘルスチェックを減らして電池を節約します",
+  "energySavingEnabledDesc": "無効にすると、FlClash NextはオリジナルFlClashと同じバックグラウンド動作とkeep-aliveを使用します。",
+  "classicDashboard": "クラシックダッシュボード",
+  "heroCards": "新しいダッシュボードのカード",
+  "heroStatus": "接続状態",
+  "heroConnect": "電源ボタン",
+  "heroServer": "選択中のサーバー",
+  "heroDetails": "ダッシュボードの詳細",
+  "forkCreator": "フォーク作成者",
+  "forkCreatorDesc": "udizu (NeroBaxmond)",
+  "forkIntro": "FlClash Nextは、見やすいダッシュボード、安定したVPN動作、スマートなサーバー選択を重視したFlClashの個人向けフォークです。",
+  "originalDevelopers": "オリジナルFlClashの開発者",
+  "originalDevelopersDesc": "chen08209、pluralplay、kastov、katsukibtw、prettyleaf、mitsuha44、およびオリジナルプロジェクトのすべての貢献者。",
+  "aiNote": "コードの一部はAIの支援で作成し、メンテナーが確認・調整・テストしています。"
 }

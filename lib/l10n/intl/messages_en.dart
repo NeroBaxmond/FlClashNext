@@ -87,6 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "ago": MessageLookupByLibrary.simpleMessage(" Ago"),
     "agree": MessageLookupByLibrary.simpleMessage("Agree"),
+    "aiNote": MessageLookupByLibrary.simpleMessage(
+      "A small part of the code was written with AI assistance and reviewed, adapted, and tested by the maintainer.",
+    ),
     "allApps": MessageLookupByLibrary.simpleMessage("All apps"),
     "allowBypass": MessageLookupByLibrary.simpleMessage(
       "Allow applications to bypass VPN",
@@ -204,6 +207,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "The current application is already the latest version",
     ),
     "checking": MessageLookupByLibrary.simpleMessage("Checking..."),
+    "classicDashboard": MessageLookupByLibrary.simpleMessage(
+      "Classic dashboard",
+    ),
     "clearData": MessageLookupByLibrary.simpleMessage("Clear Data"),
     "clearDataTip": MessageLookupByLibrary.simpleMessage(
       "This will delete all app data and restart the application. Are you sure?",
@@ -318,6 +324,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyTip": m2,
     "en": MessageLookupByLibrary.simpleMessage("English"),
     "enableOverride": MessageLookupByLibrary.simpleMessage("Enable override"),
+    "energySaving": MessageLookupByLibrary.simpleMessage("Energy saving mode"),
+    "energySavingDesc": MessageLookupByLibrary.simpleMessage(
+      "Reduce background updates and health checks to save battery",
+    ),
+    "energySavingEnabledDesc": MessageLookupByLibrary.simpleMessage(
+      "When disabled, FlClash Next uses the original FlClash background and keep-alive behaviour.",
+    ),
     "entries": MessageLookupByLibrary.simpleMessage(" entries"),
     "errorTitle": MessageLookupByLibrary.simpleMessage("Error"),
     "exclude": MessageLookupByLibrary.simpleMessage("Hidden from recent tasks"),
@@ -367,6 +380,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "There is a certain performance loss after opening",
     ),
     "fontFamily": MessageLookupByLibrary.simpleMessage("FontFamily"),
+    "forkCreator": MessageLookupByLibrary.simpleMessage("Fork creator"),
+    "forkCreatorDesc": MessageLookupByLibrary.simpleMessage(
+      "udizu (NeroBaxmond)",
+    ),
+    "forkIntro": MessageLookupByLibrary.simpleMessage(
+      "FlClash Next is a personal, polished fork of FlClash focused on a clearer dashboard, reliable VPN operation, and smart server selection.",
+    ),
     "fourColumns": MessageLookupByLibrary.simpleMessage("Four columns"),
     "fruitSaladScheme": MessageLookupByLibrary.simpleMessage("FruitSalad"),
     "general": MessageLookupByLibrary.simpleMessage("General"),
@@ -392,6 +412,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hasCacheChange": MessageLookupByLibrary.simpleMessage(
       "Do you want to cache the changes?",
     ),
+    "heroCards": MessageLookupByLibrary.simpleMessage("New dashboard cards"),
+    "heroConnect": MessageLookupByLibrary.simpleMessage("Power button"),
+    "heroDetails": MessageLookupByLibrary.simpleMessage("Dashboard details"),
+    "heroServer": MessageLookupByLibrary.simpleMessage("Selected server"),
+    "heroStatus": MessageLookupByLibrary.simpleMessage("Connection status"),
     "hostsDesc": MessageLookupByLibrary.simpleMessage("Add Hosts"),
     "hotkeyConflict": MessageLookupByLibrary.simpleMessage("Hotkey conflict"),
     "hotkeyManagement": MessageLookupByLibrary.simpleMessage(
@@ -547,6 +572,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "openLogsFolder": MessageLookupByLibrary.simpleMessage("Open logs folder"),
     "openPanel": MessageLookupByLibrary.simpleMessage("Open panel"),
     "options": MessageLookupByLibrary.simpleMessage("Options"),
+    "originalDevelopers": MessageLookupByLibrary.simpleMessage(
+      "Original FlClash developers",
+    ),
+    "originalDevelopersDesc": MessageLookupByLibrary.simpleMessage(
+      "chen08209, pluralplay, kastov, katsukibtw, prettyleaf, mitsuha44 and all other contributors to the original project.",
+    ),
     "originalRepository": MessageLookupByLibrary.simpleMessage(
       "Original Repository",
     ),

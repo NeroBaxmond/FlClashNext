@@ -1,7 +1,7 @@
 ﻿name: flclashx
 description: FlClash Next - multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.
 publish_to: "none"
-version: 0.4.2+2026071801
+version: 0.6.0+2026110301
 
 environment:
   sdk: ">=3.5.0 <4.0.0"

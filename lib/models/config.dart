@@ -77,6 +77,14 @@ class AppSettingProps with _$AppSettingProps {
     @Default(false) bool autoCheckUpdate,
     @Default(false) bool showLabel,
     @Default(false) bool disclaimerAccepted,
+
+    /// Enables the optional background throttling introduced by FlClash Next.
+    /// Disabled by default so the app keeps the original FlClash behaviour.
+    @Default(false) bool energySaving,
+    @Default(true) bool showHeroStatus,
+    @Default(true) bool showHeroConnect,
+    @Default(true) bool showHeroServer,
+    @Default(true) bool showHeroDetails,
     @Default(false) bool minimizeOnExit,
     @Default(false) bool hidden,
     @Default(false) bool developerMode,
@@ -91,9 +99,8 @@ class AppSettingProps with _$AppSettingProps {
   factory AppSettingProps.fromJson(Map<String, Object?> json) =>
       _$AppSettingPropsFromJson(json);
 
-  factory AppSettingProps.safeFromJson(Map<String, Object?>? json) => json == null
-        ? defaultAppSettingProps
-        : AppSettingProps.fromJson(json);
+  factory AppSettingProps.safeFromJson(Map<String, Object?>? json) =>
+      json == null ? defaultAppSettingProps : AppSettingProps.fromJson(json);
 }
 
 @freezed
@@ -162,13 +169,14 @@ class NetworkProps with _$NetworkProps {
 @freezed
 class ProxiesStyle with _$ProxiesStyle {
   const factory ProxiesStyle({
-    @Default(ProxiesType.list) ProxiesType type,
+    // FlClash Next defaults: tabbed groups, loose layout, one-line cards.
+    @Default(ProxiesType.tab) ProxiesType type,
     @Default(ProxiesSortType.none) ProxiesSortType sortType,
-    @Default(ProxiesLayout.standard) ProxiesLayout layout,
+    @Default(ProxiesLayout.loose) ProxiesLayout layout,
     @JsonKey(unknownEnumValue: ProxiesIconStyle.icon)
     @Default(ProxiesIconStyle.icon)
     ProxiesIconStyle iconStyle,
-    @Default(ProxyCardType.expand) ProxyCardType cardType,
+    @Default(ProxyCardType.oneline) ProxyCardType cardType,
     @Default({}) Map<String, String> iconMap,
   }) = _ProxiesStyle;
 
@@ -193,8 +201,8 @@ class ThemeProps with _$ThemeProps {
     int? primaryColor,
     @Default(defaultPrimaryColors) List<int> primaryColors,
     @Default(ThemeMode.system) ThemeMode themeMode,
-    @Default(DynamicSchemeVariant.content) DynamicSchemeVariant schemeVariant,
-    @Default(false) bool pureBlack,
+    @Default(DynamicSchemeVariant.tonalSpot) DynamicSchemeVariant schemeVariant,
+    @Default(true) bool pureBlack,
     @Default(TextScale()) TextScale textScale,
   }) = _ThemeProps;
 
@@ -297,9 +305,7 @@ class Config with _$Config {
               if (servers is! List) {
                 autoSelect["servers"] = <String>[];
               } else {
-                autoSelect["servers"] = servers
-                    .whereType<String>()
-                    .toList();
+                autoSelect["servers"] = servers.whereType<String>().toList();
               }
               final interval = autoSelect["interval"];
               if (interval is! int || interval < 60) {

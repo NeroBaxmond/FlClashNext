@@ -86,6 +86,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "ago": MessageLookupByLibrary.simpleMessage(" назад"),
     "agree": MessageLookupByLibrary.simpleMessage("Согласен"),
+    "aiNote": MessageLookupByLibrary.simpleMessage(
+      "Небольшая часть кода написана с помощью ИИ, затем проверена, адаптирована и протестирована сопровождающим проекта.",
+    ),
     "allApps": MessageLookupByLibrary.simpleMessage("Все приложения"),
     "allowBypass": MessageLookupByLibrary.simpleMessage("Разрешить обход VPN"),
     "allowBypassDesc": MessageLookupByLibrary.simpleMessage(
@@ -174,7 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Оптимизация батареи",
     ),
     "batteryOptimizationDesc": MessageLookupByLibrary.simpleMessage(
-      "Исключить приложение, чтобы система не убивала VPN в фоне",
+      "Исключить приложение из оптимизации батареи, чтобы система не убивала VPN в фоне",
     ),
     "bind": MessageLookupByLibrary.simpleMessage("Привязать"),
     "blacklistMode": MessageLookupByLibrary.simpleMessage(
@@ -205,6 +208,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Текущее приложение уже является последней версией",
     ),
     "checking": MessageLookupByLibrary.simpleMessage("Проверка..."),
+    "classicDashboard": MessageLookupByLibrary.simpleMessage(
+      "Классический вид",
+    ),
     "clearData": MessageLookupByLibrary.simpleMessage("Очистить данные"),
     "clearDataTip": MessageLookupByLibrary.simpleMessage(
       "Это удалит все данные приложения и перезапустит его. Вы уверены?",
@@ -329,6 +335,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "enableOverride": MessageLookupByLibrary.simpleMessage(
       "Включить переопределение",
     ),
+    "energySaving": MessageLookupByLibrary.simpleMessage("Энергосбережение"),
+    "energySavingDesc": MessageLookupByLibrary.simpleMessage(
+      "Уменьшает фоновые обновления и проверки для экономии батареи",
+    ),
+    "energySavingEnabledDesc": MessageLookupByLibrary.simpleMessage(
+      "Если выключить, FlClash Next будет работать в фоне и использовать keep-alive как оригинальный FlClash.",
+    ),
     "entries": MessageLookupByLibrary.simpleMessage(" записей"),
     "errorTitle": MessageLookupByLibrary.simpleMessage("Ошибка"),
     "exclude": MessageLookupByLibrary.simpleMessage("Скрыть из списка задач"),
@@ -386,6 +399,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Может незначительно снизить производительность",
     ),
     "fontFamily": MessageLookupByLibrary.simpleMessage("Семейство шрифтов"),
+    "forkCreator": MessageLookupByLibrary.simpleMessage("Создатель форка"),
+    "forkCreatorDesc": MessageLookupByLibrary.simpleMessage(
+      "udizu (NeroBaxmond)",
+    ),
+    "forkIntro": MessageLookupByLibrary.simpleMessage(
+      "FlClash Next — личный, тщательно отполированный форк FlClash с понятной главной страницей, стабильной работой VPN и умным выбором серверов.",
+    ),
     "fourColumns": MessageLookupByLibrary.simpleMessage("Четыре столбца"),
     "fruitSaladScheme": MessageLookupByLibrary.simpleMessage("Фруктовый микс"),
     "general": MessageLookupByLibrary.simpleMessage("Общие"),
@@ -411,6 +431,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "hasCacheChange": MessageLookupByLibrary.simpleMessage(
       "Сохранить изменения в кэше?",
     ),
+    "heroCards": MessageLookupByLibrary.simpleMessage("Карточки нового вида"),
+    "heroConnect": MessageLookupByLibrary.simpleMessage("Кнопка питания"),
+    "heroDetails": MessageLookupByLibrary.simpleMessage(
+      "Дополнительные карточки",
+    ),
+    "heroServer": MessageLookupByLibrary.simpleMessage("Выбранный сервер"),
+    "heroStatus": MessageLookupByLibrary.simpleMessage("Статус подключения"),
     "hostsDesc": MessageLookupByLibrary.simpleMessage("Добавить Hosts"),
     "hotkeyConflict": MessageLookupByLibrary.simpleMessage(
       "Конфликт горячих клавиш",
@@ -576,6 +603,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "openPanel": MessageLookupByLibrary.simpleMessage("Открыть панель"),
     "options": MessageLookupByLibrary.simpleMessage("Опции"),
+    "originalDevelopers": MessageLookupByLibrary.simpleMessage(
+      "Разработчики оригинального FlClash",
+    ),
+    "originalDevelopersDesc": MessageLookupByLibrary.simpleMessage(
+      "chen08209, pluralplay, kastov, katsukibtw, prettyleaf, mitsuha44 и все остальные участники оригинального проекта.",
+    ),
     "originalRepository": MessageLookupByLibrary.simpleMessage(
       "Оригинальный репозиторий",
     ),
