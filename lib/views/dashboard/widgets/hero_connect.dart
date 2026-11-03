@@ -327,17 +327,26 @@ class HeroConnect extends ConsumerWidget {
         : (activeGroup != null ? activeGroup.all.length - 1 : 0);
     final otherLocations = rawOther < 0 ? 0 : rawOther;
 
+    // Spacer placement is conditional so the power button is *geometrically*
+    // centred: a spacer above AND below the middle content, split between the
+    // top pair. With the status visible: status / half-space / button /
+    // half-space / rest. Without it: full space, button, full space. A single
+    // leading Spacer (the old code) laid all the free room above the button and
+    // glued it to the bottom.
+    final showStatus = heroSettings.showHeroStatus;
+    final hasMiddleAbove = showStatus; // content rendered before the button
+    final showServer = heroSettings.showHeroServer;
+    // Anything between the button and the server card belongs to the bottom
+    // block; if it is hidden there is nothing below the button but the server.
+    final hasBottom = showServer || heroSettings.showHeroDetails;
+
     return Column(
       children: [
-        if (heroSettings.showHeroStatus) ...[
+        if (showStatus) ...[
           _HeroStatus(isReady: isReady),
           const SizedBox(height: 14),
         ],
-        // Flexible spacers push the button to the middle and the server panel
-        // to the bottom of the space the dashboard gives the hero. They are
-        // zero-height in the intrinsic pass, so the hero never overflows when
-        // classic cards below claim the room first.
-        const Spacer(),
+        if (hasMiddleAbove) Spacer(flex: hasBottom ? 1 : 2),
         if (heroSettings.showHeroConnect) ...[
           _ConnectButton(isReady: isReady, large: true),
           const SizedBox(height: 18),
@@ -372,19 +381,22 @@ class HeroConnect extends ConsumerWidget {
             const SizedBox(height: 12),
           ],
         ],
-        if (heroSettings.showHeroServer)
-          _ServerPanel(
-            groupName: activeGroup?.name,
-            serverName: serverName,
-            displayName: displayName,
-            nameCountryCode: nameCountryCode,
-            testUrl: testUrl,
-            otherCodes: otherCodes,
-            otherLocations: otherLocations,
-          ),
-        if (heroSettings.showHeroDetails) ...[
-          const SizedBox(height: 10),
-          const _HeroMoreHint(),
+        if (showServer || heroSettings.showHeroDetails) ...[
+          if (hasMiddleAbove) Spacer(flex: hasBottom ? 1 : 2),
+          if (showServer)
+            _ServerPanel(
+              groupName: activeGroup?.name,
+              serverName: serverName,
+              displayName: displayName,
+              nameCountryCode: nameCountryCode,
+              testUrl: testUrl,
+              otherCodes: otherCodes,
+              otherLocations: otherLocations,
+            ),
+          if (heroSettings.showHeroDetails) ...[
+            if (showServer) const SizedBox(height: 10),
+            const _HeroMoreHint(),
+          ],
         ],
       ],
     );

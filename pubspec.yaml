@@ -1,7 +1,7 @@
-﻿name: flclashx
+name: flclashx
 description: FlClash Next - multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.
 publish_to: "none"
-version: 0.6.0+2026110301
+version: 0.9.0+2026110302
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
@@ -132,7 +132,7 @@ flutter_launcher_icons:
   android: true
   ios: false
   image_path: "assets/images/icon.png"
-  adaptive_icon_background: "#202020"
+  adaptive_icon_background: "#000000"
   adaptive_icon_foreground: "assets/images/icon.png"
   adaptive_icon_monochrome: "assets/images/icon_white.png"
 

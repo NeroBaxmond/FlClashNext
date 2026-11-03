@@ -24,6 +24,7 @@
 - **Hero board by default:** connection status, a large round power button with a session timer, and a "group → server" card with a flag, IP, and signal-strength ping bars.
 - **Cards are configurable:** the pencil button opens an edit mode where the hero cards (status, power button, server, details) can be shown or hidden with switches, and any of the classic dashboard cards can be added and arranged below — just like in the old dashboard.
 - **The classic view is still there:** the "Classic dashboard" switch in settings restores the fully editable legacy dashboard.
+- **Balanced hero layout:** status pinned to the top, the power button exactly centred between blocks, and the server card at the bottom; with classic cards added, the whole page scrolls as a single canvas.
 
 ### 🎯 Smart server selection
 - Improved `url-test` group handling: the selected group is automatically picked up on the home screen, the real exit node is shown (not the group), and an intermittent ping failure no longer marks a working node as unreachable — a single failed probe is retried once.

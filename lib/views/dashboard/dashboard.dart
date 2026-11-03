@@ -259,44 +259,38 @@ class _DashboardViewState extends ConsumerState<DashboardView> with PageMixin {
           }
 
           return Expanded(
-            // LayoutBuilder + ConstrainedBox(minHeight) + IntrinsicHeight is the
-            // canonical "fill viewport but scroll if content is taller" pattern:
-            //  - when the hero + classic cards are short, minHeight forces the
-            //    column to occupy the full viewport, so the status sits at the
-            //    top, the power button in the middle, and the server card at
-            //    the bottom;
-            //  - when they are tall, the constraint is exceeded and the page
-            //    scrolls as one unit with no dead space.
-            // A bare IntrinsicHeight inside a scroll view does NOT centre: the
-            // scroll view hands out unbounded height, every Spacer collapses
-            // to zero and content hugs the top (the bug being fixed here).
-            child: LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 12, bottom: 24),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight - 36,
-                  ),
-                  child: IntrinsicHeight(
+            // Two layouts, no IntrinsicHeight anywhere: RenderGrid does not
+            // implement the intrinsic-height protocol (its base class returns
+            // 0), so wrapping the combined column in IntrinsicHeight inside a
+            // scroll view both broke scrolling and collapsed the hero spacers.
+            //  - No classic cards: a plain bounded Column. The hero's Spacer
+            //    then fills the real viewport -> status top, power button
+            //    centred, server card bottom.
+            //  - Classic cards present: a normal scroll view. The grid owns
+            //    the bulk of the screen, so the hero just sits on top of it
+            //    and the whole page scrolls as one unit.
+            child: children.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16, right: 16, top: 12, bottom: 24),
+                    child: const HeroConnect(),
+                  )
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.only(
+                        left: 16, right: 16, top: 12, bottom: 24),
                     child: Column(
                       children: [
                         const HeroConnect(),
-                        if (children.isNotEmpty) ...[
-                          const SizedBox(height: 8),
-                          Grid(
-                            crossAxisCount: columns,
-                            crossAxisSpacing: spacing,
-                            mainAxisSpacing: spacing,
-                            children: children,
-                          ),
-                        ],
+                        const SizedBox(height: 8),
+                        Grid(
+                          crossAxisCount: columns,
+                          crossAxisSpacing: spacing,
+                          mainAxisSpacing: spacing,
+                          children: children,
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ),
-            ),
           );
         }),
       ],
