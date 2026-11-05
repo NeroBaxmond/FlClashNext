@@ -333,6 +333,56 @@ class HeroConnect extends ConsumerWidget {
     // half-space / rest. Without it: full space, button, full space. A single
     // leading Spacer (the old code) laid all the free room above the button and
     // glued it to the bottom.
+    // Desktop gets a compact hero: status line, power button, server card —
+    // no announce/traffic/buy cards and no tall phone-style spacing. The
+    // editable hero settings (showHero*) remain a mobile-only feature.
+    final isDesktop = system.isDesktop;
+    if (isDesktop) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (announce != null && announce.isNotEmpty) ...[
+            _AnnounceBanner(text: announce),
+            const SizedBox(height: 14),
+          ],
+          _HeroStatus(isReady: isReady),
+          const SizedBox(height: 18),
+          _ConnectButton(isReady: isReady, large: false),
+          const SizedBox(height: 18),
+          _HeroActionRow(
+            isUpdating: profile?.isUpdating ?? false,
+            onUpdate: profile == null
+                ? null
+                : () => globalState.appController.updateProfile(profile),
+            supportUrl: headers['support-url'],
+          ),
+          const SizedBox(height: 14),
+          if (hasSub) ...[
+            _TrafficCard(sub: sub),
+            const SizedBox(height: 12),
+          ],
+          if (showBuy) ...[
+            _BuyButtons(
+              showBuyPlan: showBuyPlan,
+              showBuyTraffic: showBuyTraffic,
+              buyPlanUrl: buyPlanUrl,
+              buyTrafficUrl: buyTrafficUrl,
+            ),
+            const SizedBox(height: 12),
+          ],
+          _ServerPanel(
+            groupName: activeGroup?.name,
+            serverName: serverName,
+            displayName: displayName,
+            nameCountryCode: nameCountryCode,
+            testUrl: testUrl,
+            otherCodes: otherCodes,
+            otherLocations: otherLocations,
+          ),
+        ],
+      );
+    }
+
     final showStatus = heroSettings.showHeroStatus;
     final hasMiddleAbove = showStatus; // content rendered before the button
     final showServer = heroSettings.showHeroServer;
@@ -342,7 +392,7 @@ class HeroConnect extends ConsumerWidget {
 
     return Column(
       children: [
-        if (showStatus) ...[
+        if (!isDesktop && showStatus) ...[
           _HeroStatus(isReady: isReady),
           const SizedBox(height: 14),
         ],

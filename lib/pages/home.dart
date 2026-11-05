@@ -210,10 +210,11 @@ class CommonNavigationBar extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      width: 36,
-                      height: 36,
-                      child: CircleAvatar(
+                    // Desktop: ~30% smaller than the mobile 36px logo.
+                    SizedBox(
+                      width: system.isDesktop ? 25 : 36,
+                      height: system.isDesktop ? 25 : 36,
+                      child: const CircleAvatar(
                         foregroundImage: AssetImage("assets/images/icon.png"),
                         backgroundColor: Colors.transparent,
                       ),
@@ -278,7 +279,7 @@ class CommonNavigationBar extends ConsumerWidget {
                       selectedIndex: currentIndex,
                       labelType: showLabel
                           ? NavigationRailLabelType.all
-                          : NavigationRailLabelType.none,
+                          : NavigationRailLabelType.selected,
                     ),
                   ),
                 ),

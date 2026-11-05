@@ -86,6 +86,10 @@ class AppSettingProps with _$AppSettingProps {
     @Default(true) bool showHeroServer,
     @Default(true) bool showHeroDetails,
     @Default(false) bool minimizeOnExit,
+    // Marks that the user explicitly edited the dashboard at least once on
+    // desktop; before that the desktop dashboard renders without the default
+    // classic cards (status + button + server only).
+    @Default(false) bool desktopDashboardInitialized,
     @Default(false) bool hidden,
     @Default(false) bool developerMode,
     @Default(true) bool crashlytics,
@@ -129,8 +133,10 @@ extension AccessControlExt on AccessControl {
 @freezed
 class WindowProps with _$WindowProps {
   const factory WindowProps({
-    @Default(450) double width,
-    @Default(900) double height,
+    // Desktop-first geometry: a landscape window (not the phone-like 450x900).
+    // These props are only consumed by the desktop window bootstrap.
+    @Default(1000) double width,
+    @Default(680) double height,
     double? top,
     double? left,
   }) = _WindowProps;

@@ -12,9 +12,19 @@ class Render {
   Render._internal();
   static Render? _instance;
   bool _isPaused = false;
+  bool _isVisible = true;
   final _dispatcher = SchedulerBinding.instance.platformDispatcher;
   FrameCallback? _beginFrame;
   VoidCallback? _drawFrame;
+
+  /// Track window visibility so pause() can be a no-op while the app sits in
+  /// the tray (hidden). Must be set by the window layer.
+  void setVisibility(bool visible) {
+    _isVisible = visible;
+    if (visible) {
+      resume();
+    }
+  }
 
   void active() {
     resume();
@@ -22,6 +32,13 @@ class Render {
   }
 
   void pause() {
+    // Never fully detach the frame handlers while the window is merely hidden
+    // to tray: with onBeginFrame/onDrawFrame nulled, a hidden window stops
+    // pumping frames entirely, and on Windows the engine then tears the app
+    // down after a few seconds (the "app dies 3-4s after closing to tray"
+    // bug). Minimize/restore still throttle via this path, but hidden-to-tray
+    // windows keep a live frame pump.
+    if (!_isVisible) return;
     throttler.call(
       FunctionTag.renderPause,
       _pause,

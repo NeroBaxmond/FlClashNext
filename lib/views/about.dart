@@ -275,11 +275,11 @@ class AboutView extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: EdgeInsets.all(system.isDesktop ? 8 : 12),
                     child: Image.asset(
                       'assets/images/icon.png',
-                      width: 64,
-                      height: 64,
+                      width: system.isDesktop ? 45 : 64,
+                      height: system.isDesktop ? 45 : 64,
                     ),
                   ),
                   Column(

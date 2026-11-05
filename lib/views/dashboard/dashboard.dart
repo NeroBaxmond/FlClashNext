@@ -129,8 +129,14 @@ class _DashboardViewState extends ConsumerState<DashboardView> with PageMixin {
             DashboardWidget.getDashboardWidget,
           )
           .toList();
+      // The first explicit save on desktop marks the dashboard as
+      // user-customized: the "empty by default" desktop override no longer
+      // applies afterwards.
       ref.read(appSettingProvider.notifier).updateState(
-            (state) => state.copyWith(dashboardWidgets: dashboardWidgets),
+            (state) => state.copyWith(
+              dashboardWidgets: dashboardWidgets,
+              desktopDashboardInitialized: true,
+            ),
           );
     });
   }
@@ -176,6 +182,13 @@ class _DashboardViewState extends ConsumerState<DashboardView> with PageMixin {
     final columns = max(4 * ((dashboardState.viewWidth / 320).ceil()), 8);
     final spacing = 16.ap;
 
+    // Desktop default: the classic card grid starts empty (status + button +
+    // server already live in the hero). Mobile keeps the original defaults.
+    final appSetting = ref.watch(appSettingProvider);
+    final dashboardWidgets = system.isDesktop && !appSetting.desktopDashboardInitialized
+        ? const <DashboardWidget>[]
+        : dashboardState.dashboardWidgets;
+
     bool isAllowed(DashboardWidget item) => _isAllowedWidget(
           item,
           globalModeEnabled: globalModeEnabled,
@@ -185,7 +198,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> with PageMixin {
         );
 
     final children = [
-      ...dashboardState.dashboardWidgets.where(isAllowed).map(
+      ...dashboardWidgets.where(isAllowed).map(
             (item) => item.widget,
           ),
     ];
@@ -221,9 +234,8 @@ class _DashboardViewState extends ConsumerState<DashboardView> with PageMixin {
                           mainAxisSpacing: spacing,
                           onUpdate: _handleSave,
                           children: [
-                            ...dashboardState.dashboardWidgets
-                                .where(isAllowed)
-                                .map((item) => item.widget),
+                            ...dashboardWidgets.where(isAllowed).map(
+                                (item) => item.widget),
                           ],
                         ),
                       ],
@@ -269,28 +281,55 @@ class _DashboardViewState extends ConsumerState<DashboardView> with PageMixin {
             //  - Classic cards present: a normal scroll view. The grid owns
             //    the bulk of the screen, so the hero just sits on top of it
             //    and the whole page scrolls as one unit.
-            child: children.isEmpty
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16, top: 12, bottom: 24),
-                    child: const HeroConnect(),
-                  )
-                : SingleChildScrollView(
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16, top: 12, bottom: 24),
-                    child: Column(
-                      children: [
-                        const HeroConnect(),
-                        const SizedBox(height: 8),
-                        Grid(
-                          crossAxisCount: columns,
-                          crossAxisSpacing: spacing,
-                          mainAxisSpacing: spacing,
-                          children: children,
+            // Desktop (PC): a compact, non-scrollable hero by default — only
+            // status, connect button and server. The user-added classic cards
+            // are opt-in: once the user places any, they render below the hero
+            // in a scroll view.
+            child: system.isDesktop
+                ? (children.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 24, right: 24, top: 12, bottom: 24),
+                        child: const HeroConnect(),
+                      )
+                    : SingleChildScrollView(
+                        padding: const EdgeInsets.only(
+                            left: 24, right: 24, top: 12, bottom: 24),
+                        child: Column(
+                          children: [
+                            const HeroConnect(),
+                            const SizedBox(height: 8),
+                            Grid(
+                              crossAxisCount: columns,
+                              crossAxisSpacing: spacing,
+                              mainAxisSpacing: spacing,
+                              children: children,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ))
+                : children.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, top: 12, bottom: 24),
+                        child: const HeroConnect(),
+                      )
+                    : SingleChildScrollView(
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, top: 12, bottom: 24),
+                        child: Column(
+                          children: [
+                            const HeroConnect(),
+                            const SizedBox(height: 8),
+                            Grid(
+                              crossAxisCount: columns,
+                              crossAxisSpacing: spacing,
+                              mainAxisSpacing: spacing,
+                              children: children,
+                            ),
+                          ],
+                        ),
+                      ),
           );
         }),
       ],

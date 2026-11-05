@@ -990,10 +990,14 @@ class AppController {
       return;
     }
     if (_ref.read(appSettingProvider).minimizeOnExit) {
-      if (system.isDesktop) {
-        savePreferencesDebounce();
-      }
+      savePreferencesDebounce();
       await system.back();
+    } else if (system.isDesktop) {
+      // Desktop: closing the window never quits the app — it hides to the
+      // tray so the VPN core keeps running. Real exit is via the tray menu
+      // ("Exit") or handleExit().
+      savePreferencesDebounce();
+      await window?.hide();
     } else {
       await handleExit();
     }

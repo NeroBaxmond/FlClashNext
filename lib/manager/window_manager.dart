@@ -61,7 +61,7 @@ class _WindowContainerState extends ConsumerState<WindowManager>
   void onWindowFocus() {
     super.onWindowFocus();
     commonPrint.log("focus");
-    render?.resume();
+    render?.setVisibility(true);
   }
 
   @override
@@ -98,14 +98,16 @@ class _WindowContainerState extends ConsumerState<WindowManager>
   void onWindowMinimize() async {
     globalState.appController.savePreferencesDebounce();
     commonPrint.log("minimize");
-    render?.pause();
+    // Minimize (not hide-to-tray) may throttle rendering; hide() manages its
+    // own visibility flag so the tray state keeps pumping frames.
+    render?.setVisibility(false);
     super.onWindowMinimize();
   }
 
   @override
   void onWindowRestore() {
     commonPrint.log("restore");
-    render?.resume();
+    render?.setVisibility(true);
     super.onWindowRestore();
   }
 
@@ -459,12 +461,13 @@ class AppIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
       margin: const EdgeInsets.only(left: 8),
-      child: const Row(
+      child: Row(
         children: [
           SizedBox(
-            width: 24,
-            height: 24,
-            child: CircleAvatar(
+            // ~30% smaller than the original 24px (desktop header only).
+            width: system.isDesktop ? 17 : 24,
+            height: system.isDesktop ? 17 : 24,
+            child: const CircleAvatar(
               foregroundImage: AssetImage("assets/images/icon.png"),
               backgroundColor: Colors.transparent,
             ),
@@ -472,7 +475,7 @@ class AppIcon extends StatelessWidget {
           SizedBox(
             width: 8,
           ),
-          Text(
+          const Text(
             appName,
           ),
         ],

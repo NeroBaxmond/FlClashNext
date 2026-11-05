@@ -43,7 +43,11 @@ mixin _$AppSettingProps {
   bool get showHeroConnect => throw _privateConstructorUsedError;
   bool get showHeroServer => throw _privateConstructorUsedError;
   bool get showHeroDetails => throw _privateConstructorUsedError;
-  bool get minimizeOnExit => throw _privateConstructorUsedError;
+  bool get minimizeOnExit =>
+      throw _privateConstructorUsedError; // Marks that the user explicitly edited the dashboard at least once on
+// desktop; before that the desktop dashboard renders without the default
+// classic cards (status + button + server only).
+  bool get desktopDashboardInitialized => throw _privateConstructorUsedError;
   bool get hidden => throw _privateConstructorUsedError;
   bool get developerMode => throw _privateConstructorUsedError;
   bool get crashlytics => throw _privateConstructorUsedError;
@@ -90,6 +94,7 @@ abstract class $AppSettingPropsCopyWith<$Res> {
       bool showHeroServer,
       bool showHeroDetails,
       bool minimizeOnExit,
+      bool desktopDashboardInitialized,
       bool hidden,
       bool developerMode,
       bool crashlytics,
@@ -134,6 +139,7 @@ class _$AppSettingPropsCopyWithImpl<$Res, $Val extends AppSettingProps>
     Object? showHeroServer = null,
     Object? showHeroDetails = null,
     Object? minimizeOnExit = null,
+    Object? desktopDashboardInitialized = null,
     Object? hidden = null,
     Object? developerMode = null,
     Object? crashlytics = null,
@@ -220,6 +226,10 @@ class _$AppSettingPropsCopyWithImpl<$Res, $Val extends AppSettingProps>
           ? _value.minimizeOnExit
           : minimizeOnExit // ignore: cast_nullable_to_non_nullable
               as bool,
+      desktopDashboardInitialized: null == desktopDashboardInitialized
+          ? _value.desktopDashboardInitialized
+          : desktopDashboardInitialized // ignore: cast_nullable_to_non_nullable
+              as bool,
       hidden: null == hidden
           ? _value.hidden
           : hidden // ignore: cast_nullable_to_non_nullable
@@ -285,6 +295,7 @@ abstract class _$$AppSettingPropsImplCopyWith<$Res>
       bool showHeroServer,
       bool showHeroDetails,
       bool minimizeOnExit,
+      bool desktopDashboardInitialized,
       bool hidden,
       bool developerMode,
       bool crashlytics,
@@ -327,6 +338,7 @@ class __$$AppSettingPropsImplCopyWithImpl<$Res>
     Object? showHeroServer = null,
     Object? showHeroDetails = null,
     Object? minimizeOnExit = null,
+    Object? desktopDashboardInitialized = null,
     Object? hidden = null,
     Object? developerMode = null,
     Object? crashlytics = null,
@@ -413,6 +425,10 @@ class __$$AppSettingPropsImplCopyWithImpl<$Res>
           ? _value.minimizeOnExit
           : minimizeOnExit // ignore: cast_nullable_to_non_nullable
               as bool,
+      desktopDashboardInitialized: null == desktopDashboardInitialized
+          ? _value.desktopDashboardInitialized
+          : desktopDashboardInitialized // ignore: cast_nullable_to_non_nullable
+              as bool,
       hidden: null == hidden
           ? _value.hidden
           : hidden // ignore: cast_nullable_to_non_nullable
@@ -473,6 +489,7 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
       this.showHeroServer = true,
       this.showHeroDetails = true,
       this.minimizeOnExit = false,
+      this.desktopDashboardInitialized = false,
       this.hidden = false,
       this.developerMode = false,
       this.crashlytics = true,
@@ -552,6 +569,12 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
   @override
   @JsonKey()
   final bool minimizeOnExit;
+// Marks that the user explicitly edited the dashboard at least once on
+// desktop; before that the desktop dashboard renders without the default
+// classic cards (status + button + server only).
+  @override
+  @JsonKey()
+  final bool desktopDashboardInitialized;
   @override
   @JsonKey()
   final bool hidden;
@@ -578,7 +601,7 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
 
   @override
   String toString() {
-    return 'AppSettingProps(locale: $locale, dashboardWidgets: $dashboardWidgets, onlyStatisticsProxy: $onlyStatisticsProxy, autoLaunch: $autoLaunch, silentLaunch: $silentLaunch, autoRun: $autoRun, openLogs: $openLogs, closeConnections: $closeConnections, testUrl: $testUrl, isAnimateToPage: $isAnimateToPage, autoCheckUpdate: $autoCheckUpdate, showLabel: $showLabel, disclaimerAccepted: $disclaimerAccepted, energySaving: $energySaving, showHeroStatus: $showHeroStatus, showHeroConnect: $showHeroConnect, showHeroServer: $showHeroServer, showHeroDetails: $showHeroDetails, minimizeOnExit: $minimizeOnExit, hidden: $hidden, developerMode: $developerMode, crashlytics: $crashlytics, zashboardInApp: $zashboardInApp, overrideProviderSettings: $overrideProviderSettings, overrideNetworkSettings: $overrideNetworkSettings, recoveryStrategy: $recoveryStrategy, newDashboard: $newDashboard)';
+    return 'AppSettingProps(locale: $locale, dashboardWidgets: $dashboardWidgets, onlyStatisticsProxy: $onlyStatisticsProxy, autoLaunch: $autoLaunch, silentLaunch: $silentLaunch, autoRun: $autoRun, openLogs: $openLogs, closeConnections: $closeConnections, testUrl: $testUrl, isAnimateToPage: $isAnimateToPage, autoCheckUpdate: $autoCheckUpdate, showLabel: $showLabel, disclaimerAccepted: $disclaimerAccepted, energySaving: $energySaving, showHeroStatus: $showHeroStatus, showHeroConnect: $showHeroConnect, showHeroServer: $showHeroServer, showHeroDetails: $showHeroDetails, minimizeOnExit: $minimizeOnExit, desktopDashboardInitialized: $desktopDashboardInitialized, hidden: $hidden, developerMode: $developerMode, crashlytics: $crashlytics, zashboardInApp: $zashboardInApp, overrideProviderSettings: $overrideProviderSettings, overrideNetworkSettings: $overrideNetworkSettings, recoveryStrategy: $recoveryStrategy, newDashboard: $newDashboard)';
   }
 
   @override
@@ -621,6 +644,10 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
                 other.showHeroDetails == showHeroDetails) &&
             (identical(other.minimizeOnExit, minimizeOnExit) ||
                 other.minimizeOnExit == minimizeOnExit) &&
+            (identical(other.desktopDashboardInitialized,
+                    desktopDashboardInitialized) ||
+                other.desktopDashboardInitialized ==
+                    desktopDashboardInitialized) &&
             (identical(other.hidden, hidden) || other.hidden == hidden) &&
             (identical(other.developerMode, developerMode) ||
                 other.developerMode == developerMode) &&
@@ -663,6 +690,7 @@ class _$AppSettingPropsImpl implements _AppSettingProps {
         showHeroServer,
         showHeroDetails,
         minimizeOnExit,
+        desktopDashboardInitialized,
         hidden,
         developerMode,
         crashlytics,
@@ -712,6 +740,7 @@ abstract class _AppSettingProps implements AppSettingProps {
       final bool showHeroServer,
       final bool showHeroDetails,
       final bool minimizeOnExit,
+      final bool desktopDashboardInitialized,
       final bool hidden,
       final bool developerMode,
       final bool crashlytics,
@@ -765,7 +794,12 @@ abstract class _AppSettingProps implements AppSettingProps {
   @override
   bool get showHeroDetails;
   @override
-  bool get minimizeOnExit;
+  bool
+      get minimizeOnExit; // Marks that the user explicitly edited the dashboard at least once on
+// desktop; before that the desktop dashboard renders without the default
+// classic cards (status + button + server only).
+  @override
+  bool get desktopDashboardInitialized;
   @override
   bool get hidden;
   @override
@@ -1103,6 +1137,8 @@ WindowProps _$WindowPropsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WindowProps {
+// Desktop-first geometry: a landscape window (not the phone-like 450x900).
+// These props are only consumed by the desktop window bootstrap.
   double get width => throw _privateConstructorUsedError;
   double get height => throw _privateConstructorUsedError;
   double? get top => throw _privateConstructorUsedError;
@@ -1222,11 +1258,13 @@ class __$$WindowPropsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WindowPropsImpl implements _WindowProps {
   const _$WindowPropsImpl(
-      {this.width = 450, this.height = 900, this.top, this.left});
+      {this.width = 1000, this.height = 680, this.top, this.left});
 
   factory _$WindowPropsImpl.fromJson(Map<String, dynamic> json) =>
       _$$WindowPropsImplFromJson(json);
 
+// Desktop-first geometry: a landscape window (not the phone-like 450x900).
+// These props are only consumed by the desktop window bootstrap.
   @override
   @JsonKey()
   final double width;
@@ -1284,6 +1322,8 @@ abstract class _WindowProps implements WindowProps {
   factory _WindowProps.fromJson(Map<String, dynamic> json) =
       _$WindowPropsImpl.fromJson;
 
+// Desktop-first geometry: a landscape window (not the phone-like 450x900).
+// These props are only consumed by the desktop window bootstrap.
   @override
   double get width;
   @override

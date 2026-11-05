@@ -27,9 +27,9 @@ class Window {
     await windowManager.ensureInitialized();
     final windowOptions = WindowOptions(
       size: Size(props.width, props.height),
-      // Lock the minimum window size to 380×600 so it can't be shrunk below that
-      // in either dimension — only grown.
-      minimumSize: const Size(380, 600),
+      // Landscape desktop window; can be shrunk below this in either dimension
+      // — only grown.
+      minimumSize: const Size(500, 400),
     );
     await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
     if (!Platform.isMacOS) {
@@ -71,7 +71,7 @@ class Window {
   Future<void> show() async {
     if (Platform.isMacOS) return;
 
-    render?.resume();
+    render?.setVisibility(true);
     await windowManager.show();
     await windowManager.focus();
     await windowManager.setSkipTaskbar(false);
@@ -92,7 +92,10 @@ class Window {
   Future<void> hide() async {
     if (Platform.isMacOS) return;
 
-    render?.pause();
+    // Mark the app as hidden BEFORE the engine hides the window: while hidden
+    // to tray the frame pump must stay alive (see Render.pause), otherwise the
+    // Windows engine kills the process a few seconds later.
+    render?.setVisibility(false);
     await windowManager.hide();
     await windowManager.setSkipTaskbar(true);
   }

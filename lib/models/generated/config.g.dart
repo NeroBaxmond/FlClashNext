@@ -30,6 +30,8 @@ _$AppSettingPropsImpl _$$AppSettingPropsImplFromJson(
       showHeroServer: json['showHeroServer'] as bool? ?? true,
       showHeroDetails: json['showHeroDetails'] as bool? ?? true,
       minimizeOnExit: json['minimizeOnExit'] as bool? ?? false,
+      desktopDashboardInitialized:
+          json['desktopDashboardInitialized'] as bool? ?? false,
       hidden: json['hidden'] as bool? ?? false,
       developerMode: json['developerMode'] as bool? ?? false,
       crashlytics: json['crashlytics'] as bool? ?? true,
@@ -68,6 +70,7 @@ Map<String, dynamic> _$$AppSettingPropsImplToJson(
       'showHeroServer': instance.showHeroServer,
       'showHeroDetails': instance.showHeroDetails,
       'minimizeOnExit': instance.minimizeOnExit,
+      'desktopDashboardInitialized': instance.desktopDashboardInitialized,
       'hidden': instance.hidden,
       'developerMode': instance.developerMode,
       'crashlytics': instance.crashlytics,
@@ -144,8 +147,8 @@ const _$AccessSortTypeEnumMap = {
 
 _$WindowPropsImpl _$$WindowPropsImplFromJson(Map<String, dynamic> json) =>
     _$WindowPropsImpl(
-      width: (json['width'] as num?)?.toDouble() ?? 450,
-      height: (json['height'] as num?)?.toDouble() ?? 900,
+      width: (json['width'] as num?)?.toDouble() ?? 1000,
+      height: (json['height'] as num?)?.toDouble() ?? 680,
       top: (json['top'] as num?)?.toDouble(),
       left: (json['left'] as num?)?.toDouble(),
     );

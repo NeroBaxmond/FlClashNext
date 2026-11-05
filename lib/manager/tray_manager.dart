@@ -163,7 +163,9 @@ class _TrayContainerState extends ConsumerState<TrayManager> with TrayListener, 
   void onTrayIconMouseDown() {
     _closeWindowsPopupMenu();
     if (!Platform.isLinux) {
-      window?.show();
+      // Left click on the tray icon: toggle visibility (show when hidden to
+      // tray, hide back to tray when shown) — the expected desktop behaviour.
+      globalState.appController.updateVisible();
     }
   }
 
